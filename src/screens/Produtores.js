@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { View } from 'react-native'
 import {
   Container,
   Header,
@@ -18,23 +19,27 @@ import { bindActionCreators } from "redux";
 import { increment, decrement } from "../store/actions";
 
 class Produtores extends Component {
+  
   incrementHandler = () => {
     this.props.onIncrement();
   };
   decrementHandler = () => {
     this.props.onDecrement();
   };
-
   render() {
     return (
       <Container>
-        <Button block success onPress={this.incrementHandler}>
-          <Text>Increment</Text>
-        </Button>
-        <Button block danger onPress={this.decrementHandler}>
-          <Text>Decrement</Text>
-        </Button>
-        <Text>{this.props.valor}</Text>
+          <View style={{flex: 1, alignContent: 'center'}}>
+            <Button block success onPress={this.incrementHandler}>
+              <Text>Increment</Text>
+            </Button>
+            <Button block danger onPress={this.decrementHandler}>
+              <Text>Decrement</Text>
+            </Button>
+          </View>
+          <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center'}}>
+            <Text style={{fontSize: 60}}>{this.props.valor}</Text>   
+          </View>
       </Container>
     );
   }

@@ -5,6 +5,8 @@ import { Icon } from 'react-native-elements'
 import Produtos from '../screens/Produtos'
 import Produtores from '../screens/Produtores'
 import { primaryColor, secondaryColor } from '../theme/variables/commonColor';
+import InitialScreen from '../screens/InitialScreen';
+import MainScreen from '../screens/index';
 
 export const Tabs = TabNavigator(
 {
@@ -30,7 +32,10 @@ export const Tabs = TabNavigator(
 });
 
   export const Root = StackNavigator({
-    Tabs: { screen: Tabs }
+    Tabs: { screen: MainScreen },
+    InitialScreen: { screen: InitialScreen},
+    Produtos: { screen: Produtos},
+    Produtores: { screen: Produtores},
   }, 
   {
     mode: 'modal',

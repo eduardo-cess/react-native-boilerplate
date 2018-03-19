@@ -14,32 +14,27 @@ import {
   Icon,
   Text
 } from "native-base";
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import { Root, Tabs } from './config/routes';
+import authenticate from './store/reducers/authentication';
 
-export default class AnatomyExample extends React.Component {
+class App extends React.Component {
   render() {
     return (
-      <Container>
-        <Header >
-          <Left>
-            <Button transparent>
-              <Icon name="menu" />
-            </Button>
-          </Left>
-          <Body>
-            <Title>Bem Vindo</Title>
-          </Body>
-          <Right />
-        </Header>
-          <Root/>
-        <Footer>
-          <FooterTab>
-            <Button full>
-              <Text>UFPA - Developers</Text>
-            </Button>
-          </FooterTab>
-        </Footer>
-      </Container>
+      <Root/>
     );
   }
 }
+
+const mapStateToTprops = (state) => {
+  return {
+    userStatus: state.authenticate.userStatus
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {}
+}
+
+export default connect(mapStateToTprops, mapDispatchToProps)(App)

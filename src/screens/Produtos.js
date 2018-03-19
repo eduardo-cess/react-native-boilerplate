@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { View } from "react-native";
 import {
   Container,
   Header,
@@ -15,7 +16,7 @@ import {
 } from "native-base";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { increment, decrement } from "../store/actions";
+import { increment, decrement, logOut } from "../store/actions";
 
 class Produtos extends Component {
   incrementHandler = () => {
@@ -24,19 +25,35 @@ class Produtos extends Component {
   decrementHandler = () => {
     this.props.onDecrement();
   };
+  logOutHandler = () => {
+    this.props.onLogOut()
+    // this.props.navigation.navigate('InitialScreen')
+  }
 
   render() {
     return (
       <Container>
-        <Content>
+        <View style={{ flex: 1, alignContent: "center" }}>
           <Button block success onPress={this.incrementHandler}>
             <Text>Increment</Text>
           </Button>
           <Button block danger onPress={this.decrementHandler}>
             <Text>Decrement</Text>
           </Button>
-          <Text>{this.props.valor}</Text>
-        </Content>
+        </View>
+        <View
+          style={{ flex: 1, flexDirection: "row", justifyContent: "center" }}
+        >
+          <Text style={{ fontSize: 60 }}>{this.props.valor}</Text>
+        </View>
+        <View
+          style={{ flex: 1, flexDirection: "row", justifyContent: "center" }}
+        >
+          <Button danger onPress={this.logOutHandler} iconLeft>
+          <Icon name='exit'/>
+            <Text>LOGOUT</Text>
+          </Button>
+        </View>
       </Container>
     );
   }
@@ -50,7 +67,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onIncrement: () => dispatch(increment()),
-    onDecrement: () => dispatch(decrement())
+    onDecrement: () => dispatch(decrement()),
+    onLogOut: () => dispatch(logOut())
   };
 };
 

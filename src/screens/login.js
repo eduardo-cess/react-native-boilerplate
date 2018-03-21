@@ -8,6 +8,7 @@ export default class LoginScreen extends Component {
       <Container style={{flex: 1, alignContent: 'center'}} >
         <Header/>
         <Content style={{marginTop: '30%'}}>
+          <Image source={require('./../static/img/logo_planta.png')} />
           <Form>
             <Item floatingLabel>
               <Label>Email</Label> 

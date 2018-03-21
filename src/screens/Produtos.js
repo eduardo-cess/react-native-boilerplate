@@ -12,7 +12,9 @@ import {
   Right,
   Body,
   Icon,
-  Text
+  Text,
+  ListItem,
+  List
 } from "native-base";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -32,28 +34,22 @@ class Produtos extends Component {
 
   render() {
     return (
-      <Container>
-        <View style={{ flex: 1, alignContent: "center" }}>
-          <Button block success onPress={this.incrementHandler}>
-            <Text>Increment</Text>
-          </Button>
-          <Button block danger onPress={this.decrementHandler}>
-            <Text>Decrement</Text>
-          </Button>
-        </View>
-        <View
-          style={{ flex: 1, flexDirection: "row", justifyContent: "center" }}
-        >
-          <Text style={{ fontSize: 60 }}>{this.props.valor}</Text>
-        </View>
-        <View
-          style={{ flex: 1, flexDirection: "row", justifyContent: "center" }}
-        >
-          <Button danger onPress={this.logOutHandler} iconLeft>
-          <Icon name='exit'/>
-            <Text>LOGOUT</Text>
-          </Button>
-        </View>
+<Container>
+        <Header />
+        <Content>
+          <List>
+            <ListItem avatar>
+
+              <Body>
+                <Text>Kumar Pratik</Text>
+                <Text note>Doing what you like will always keep you happy . .</Text>
+              </Body>
+              <Right>
+                <Text note>3:43 pm</Text>
+              </Right>
+            </ListItem>
+          </List>
+        </Content>
       </Container>
     );
   }

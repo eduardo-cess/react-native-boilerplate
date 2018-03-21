@@ -10,9 +10,9 @@ import { increment, logIn } from '../store/actions';
 
 class InitialScreen extends Component {
     logInHandler = () => {
-      this.props.navigation.navigate("Login");
-      // this.props.onLogIn();
-      // this.props.navigation.navigate("Tabs");
+      // this.props.navigation.navigate("Login");
+      this.props.onLogIn();
+      this.props.navigation.navigate("Tabs");
     }
   render() {
     return (

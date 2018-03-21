@@ -7,6 +7,7 @@ import Produtores from '../screens/Produtores'
 import { primaryColor, secondaryColor } from '../theme/variables/commonColor';
 import InitialScreen from '../screens/InitialScreen';
 import MainScreen from '../screens/index';
+import LoginScreen from '../screens/login';
 
 export const Tabs = TabNavigator(
 {
@@ -36,6 +37,7 @@ export const Tabs = TabNavigator(
     InitialScreen: { screen: InitialScreen},
     Produtos: { screen: Produtos},
     Produtores: { screen: Produtores},
+    Login: { screen: LoginScreen},
   }, 
   {
     mode: 'modal',

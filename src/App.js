@@ -18,8 +18,15 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Root, Tabs } from './config/routes';
 import authenticate from './store/reducers/authentication';
+import firebaseConfig from './config/firebaseConfig';
+import login from './screens/login';
+
 
 class App extends React.Component {
+
+  componentWillMount() {
+    firebaseConfig;
+  }
   render() {
     return (
       <Root/>

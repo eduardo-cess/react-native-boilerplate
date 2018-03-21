@@ -27,7 +27,6 @@ class MainScreen extends React.Component {
   componentWillReceiveProps (nextProps) {
     if(nextProps.userStatus === 'isLoggedOut'){
       this.props.navigation.navigate('InitialScreen')
-      // alert(nextProps.userStatus)
     }
   }
 

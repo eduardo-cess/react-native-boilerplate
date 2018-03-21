@@ -1,5 +1,5 @@
 import React from 'react'
-import { TabNavigator, StackNavigator } from 'react-navigation'
+import { TabNavigator, StackNavigator, SwitchNavigator } from 'react-navigation'
 import { Icon } from 'react-native-elements'
 
 import Produtos from '../screens/Produtos'
@@ -32,12 +32,15 @@ export const Tabs = TabNavigator(
     }
 });
 
-  export const Root = StackNavigator({
+  export const Root = SwitchNavigator({
     Tabs: { screen: MainScreen },
     InitialScreen: { screen: InitialScreen},
+<<<<<<< HEAD
     Produtos: { screen: Produtos},
     Produtores: { screen: Produtores},
     Login: { screen: LoginScreen},
+=======
+>>>>>>> d4c222dbc4ab837f755ac205c224ccd479cd9b1d
   }, 
   {
     mode: 'modal',

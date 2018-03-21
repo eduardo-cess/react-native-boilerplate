@@ -35,12 +35,9 @@ export const Tabs = TabNavigator(
   export const Root = SwitchNavigator({
     Tabs: { screen: MainScreen },
     InitialScreen: { screen: InitialScreen},
-<<<<<<< HEAD
     Produtos: { screen: Produtos},
     Produtores: { screen: Produtores},
     Login: { screen: LoginScreen},
-=======
->>>>>>> d4c222dbc4ab837f755ac205c224ccd479cd9b1d
   }, 
   {
     mode: 'modal',

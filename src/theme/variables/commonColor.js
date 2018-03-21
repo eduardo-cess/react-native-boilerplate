@@ -6,8 +6,8 @@ const deviceHeight = Dimensions.get("window").height;
 const deviceWidth = Dimensions.get("window").width;
 const platform = Platform.OS;
 const platformStyle = undefined;
-export const primaryColor = '#673AB7'
-export const secondaryColor = '#5E35B1'
+export const primaryColor = '#2E7D32'
+export const secondaryColor = '#1B5E20'
 
 export default {
 	platformStyle,

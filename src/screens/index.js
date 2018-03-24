@@ -12,12 +12,15 @@ import {
   Right,
   Body,
   Icon,
-  Text
+  Text,
+  Drawer
 } from "native-base";
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Tabs } from '../config/routes';
 import authenticate from '../store/reducers/authentication';
+import SideBar from '../components/sideBar';
+import Produtos from './Produtos';
 
 class MainScreen extends React.Component {
   componentDidMount() {
@@ -36,30 +39,43 @@ class MainScreen extends React.Component {
     }
   }
   
+  closeDrawer = () => {
+    this.drawer._root.close()
+  };
+  openDrawer = () => {
+    this.drawer._root.open()
+  };
+
 
   render() {
     return (
-      <Container>
-        <Header >
-          <Left>
-            <Button transparent>
-              <Icon name="menu" />
-            </Button>
-          </Left>
-          <Body>
-            <Title>Bem Vindo</Title>
-          </Body>
-          <Right />
-        </Header>
-          <Tabs/>
-        <Footer>
-          <FooterTab>
-            <Button full>
-              <Text>UFPA - Developers {this.props.userStatus}</Text>
-            </Button>
-          </FooterTab>
-        </Footer>
-      </Container>
+      <Drawer  
+      ref={(ref) => { this.drawer = ref; }}
+      content={<SideBar/>}
+      onClose={() => this.closeDrawer()}>
+        <Container>
+          <Header noShadow hasTabs>
+            <Left>
+              <Button transparent onPress={this.openDrawer}>
+                <Icon name="menu" />
+              </Button>
+            </Left>
+            <Body>
+              <Title>Bem Vindo</Title>
+            </Body>
+            <Right />
+          </Header>
+            <Tabs/>
+          <Footer>
+            <FooterTab>
+              <Button full>
+                <Text style={{color: 'white'}}>UFPA - Developers</Text>
+              </Button>
+            </FooterTab>
+          </Footer>
+        </Container>
+      
+      </Drawer>
     );
   }
 }

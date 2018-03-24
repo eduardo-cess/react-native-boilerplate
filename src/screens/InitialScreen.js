@@ -3,14 +3,10 @@ import { View } from "react-native";
 import { Button, Text } from "native-base";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-// import authenticate from "../store/reducers/authentication";
-// import counter from "../store/reducers/counter";
 import { increment, logIn } from '../store/actions';
-// import { logIn } from '../store/actions/authentication';
 
 class InitialScreen extends Component {
     logInHandler = () => {
-      // this.props.navigation.navigate("Login");
       this.props.onLogIn();
       this.props.navigation.navigate("Tabs");
     }
@@ -40,8 +36,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onLogIn: () => dispatch(logIn()),
-    inc: () => dispatch(increment)
+    onLogIn: () => dispatch(logIn())
   };
 };
 

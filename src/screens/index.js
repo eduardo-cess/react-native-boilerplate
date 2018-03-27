@@ -52,7 +52,13 @@ class MainScreen extends React.Component {
       <Drawer  
       ref={(ref) => { this.drawer = ref; }}
       content={<SideBar/>}
-      onClose={() => this.closeDrawer()}>
+      onClose={() => this.closeDrawer()}
+      type="displace"
+      captureGestures='open'
+      tapToClose={true}
+      negotiatePan={true}
+      panOpenMask={0.25}
+      >
         <Container>
           <Header noShadow hasTabs>
             <Left>

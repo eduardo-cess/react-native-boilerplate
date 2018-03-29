@@ -20,6 +20,7 @@ import { bindActionCreators } from 'redux'
 import { Tabs } from '../config/routes';
 import authenticate from '../store/reducers/authentication';
 import SideBar from '../components/sideBar';
+import AppHeader from '../components/header'
 import Produtos from './Produtos';
 
 class MainScreen extends React.Component {
@@ -60,18 +61,8 @@ class MainScreen extends React.Component {
       panOpenMask={0.25}
       >
         <Container>
-          <Header noShadow hasTabs>
-            <Left>
-              <Button transparent onPress={this.openDrawer}>
-                <Icon name="menu" />
-              </Button>
-            </Left>
-            <Body>
-              <Title>Bem Vindo</Title>
-            </Body>
-            <Right />
-          </Header>
-            <Tabs/>
+          <AppHeader leftButtonPress={this.openDrawer} title={'Bem Vindo'}/>
+          <Tabs/>
           <Footer>
             <FooterTab>
               <Button full>

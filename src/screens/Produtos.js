@@ -48,36 +48,33 @@ class Produtos extends Component {
     this.props.onGetAllProdutos()
   }
 
-  // componentWillMount() {
-  //   this.getAllProdutosHandler()
-    
-  //   alert(this.props.produtos[0])
-  // }
-
+  navigateToProduto = () => {
+    this.props.navigation.navigate("ProdutoScreen");
+  }
   render() {
     return (
       <Container>
         <Content>
-          {
-            this.props.produtos.map(produto => {
-              return(
-                <List key={produto.id}>
-                  <ListItem avatar>
+          <List  >
+            {
+              this.props.produtos.map(produto => {
+                return(
+                  <ListItem avatar key={produto.id} onPress={this.navigateToProduto}>
                     <Left>
                       <Thumbnail source={{ uri: 'https://tudoparasuaempresa.com.br/assets/img/!product-image.jpg' }} />
                     </Left>
-                    <Body>
-                      <Text>{produto.nome}</Text>
+                    <Body >
+                      <Text >{produto.nome}</Text>
                       <Text note>{produto.produtor}</Text>
                     </Body>
                     <Right>
                       <Text style={styles.money}>R${produto.preco.toFixed(2)}</Text>
                     </Right>
                   </ListItem>
-                </List>
-              )
-            })
-          }
+                )
+              })
+            }
+          </List>
         </Content>
       </Container>
     );

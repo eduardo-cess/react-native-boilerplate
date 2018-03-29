@@ -8,11 +8,26 @@ import { primaryColor, secondaryColor } from '../theme/variables/commonColor';
 import InitialScreen from '../screens/InitialScreen';
 import MainScreen from '../screens/index';
 import LoginScreen from '../screens/login';
+import ProdutoScreen from '../screens/ProdutoScreen';
+
+export const ProdutosTab = StackNavigator({
+  Produtos: { screen: Produtos},
+  ProdutoScreen: { 
+    screen: ProdutoScreen,
+    navigationOptions: { 
+      tabBarVisible: false,
+      swipeEnabled: false
+     }
+   },
+},
+{
+  headerMode: 'none'
+});
 
 export const Tabs = TabNavigator(
 {
     Produtos: {
-      screen: Produtos,
+      screen: ProdutosTab,
       navigationOptions: {
         tabBarLabel: 'Produtos',
       },
@@ -32,14 +47,15 @@ export const Tabs = TabNavigator(
     }
 });
 
-  export const Root = SwitchNavigator({
-    Tabs: { screen: MainScreen },
-    InitialScreen: { screen: InitialScreen},
-    Produtos: { screen: Produtos},
-    Produtores: { screen: Produtores},
-    Login: { screen: LoginScreen},
-  }, 
-  {
-    mode: 'modal',
-    headerMode: 'none',
-  });
+
+
+export const Root = SwitchNavigator({
+  Tabs: { screen: MainScreen },
+  InitialScreen: { screen: InitialScreen},
+  Produtores: { screen: Produtores},
+  Login: { screen: LoginScreen},
+}, 
+{
+  mode: 'modal',
+  headerMode: 'none',
+});

@@ -26,25 +26,26 @@ export const ProdutosTab = StackNavigator({
 
 export const Tabs = TabNavigator(
 {
-    Produtos: {
-      screen: ProdutosTab,
-      navigationOptions: {
-        tabBarLabel: 'Produtos',
-      },
+  Produtos: {
+    screen: ProdutosTab,
+    navigationOptions: {
+      tabBarLabel: 'Produtos',
     },
-    Produtores: {
-      screen: Produtores,
-      navigationOptions: {
-        tabBarLabel: 'Produtores',
-      },
+  },
+  Produtores: {
+    screen: Produtores,
+    navigationOptions: {
+      tabBarLabel: 'Produtores',
     },
+  },
 }, 
 {
-    tabBarOptions: {
-    style: {
-        backgroundColor: secondaryColor,
-    },
-    }
+  
+  tabBarOptions: {
+  style: {
+      backgroundColor: secondaryColor,
+  },
+  }
 });
 
 
@@ -56,6 +57,6 @@ export const Root = SwitchNavigator({
   Login: { screen: LoginScreen},
 }, 
 {
-  mode: 'modal',
-  headerMode: 'none',
+  // mode: 'modal',
+  headerMode: 'screen',
 });

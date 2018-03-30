@@ -19,7 +19,8 @@ import {
 } from "native-base";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { logOut, getAllProdutos } from "../store/actions";
+import { logOut, getAllProdutos, navigateToProdutoScreen } from "../store/actions";
+import { navigateTo } from '../store/reducers';
 
 class Produtos extends Component {
   produtos = [
@@ -35,21 +36,21 @@ class Produtos extends Component {
     {"id": 10, "nome": "Tomates", "preco": 0.50, "produtor": "Produtor XYZ"}
   ]
 
-  incrementHandler = () => {
-    this.props.onIncrement();
-  };
-  decrementHandler = () => {
-    this.props.onDecrement();
-  };
   logOutHandler = () => {
     this.props.onLogOut()
-  };
+  }
   getAllProdutosHandler = () => {
     this.props.onGetAllProdutos()
   }
+  navigateToProdutoScreenHandler = () => {
+    this.props.onNavigateToProdutoScreen()
+  }
 
   navigateToProduto = () => {
-    this.props.navigation.navigate("ProdutoScreen");
+    const {navigation: {navigate, state: {key}}} = this.props;
+    navigate("ProdutoScreen", {from: key})
+    // alert(key)
+    this.navigateToProdutoScreenHandler()
   }
   render() {
     return (
@@ -91,13 +92,15 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   return {
-    produtos: produtos
+    produtos: produtos,
+    screenTitle: state.navigateTo.title
   };
 };
 const mapDispatchToProps = dispatch => {
   return {
     onLogOut: () => dispatch(logOut()),
-    onGetAllProdutos: () => dispatch(getAllProdutos())
+    onGetAllProdutos: () => dispatch(getAllProdutos()),
+    onNavigateToProdutoScreen: () => dispatch(navigateToProdutoScreen())
   };
 };
 

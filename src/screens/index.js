@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, DrawerLayoutAndroid } from "react-native";
 import {
   Container,
   Header,
@@ -15,13 +15,21 @@ import {
   Text,
   Drawer
 } from "native-base";
+
+import { NavigationActions } from 'react-navigation';
+
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+
 import { Tabs } from '../config/routes';
-import authenticate from '../store/reducers/authentication';
+
 import SideBar from '../components/sideBar';
 import AppHeader from '../components/header'
+
 import Produtos from './Produtos';
+
+import authenticate from '../store/reducers/authentication';
+import navigateTo from '../store/reducers';
 
 class MainScreen extends React.Component {
   componentDidMount() {
@@ -40,46 +48,43 @@ class MainScreen extends React.Component {
     }
   }
   
-  closeDrawer = () => {
-    this.drawer._root.close()
-  };
   openDrawer = () => {
-    this.drawer._root.open()
-  };
+    return this.refs['DRAWER_REF'].openDrawer();
+  }
 
+  renderHeader = () => {
+    if(this.props.screenTitle === 'Bem Vindo')
+      return(<AppHeader leftButtonPress={this.openDrawer} title={this.props.screenTitle}/>)
+  }
 
   render() {
     return (
-      <Drawer  
-      ref={(ref) => { this.drawer = ref; }}
-      content={<SideBar/>}
-      onClose={() => this.closeDrawer()}
-      type="displace"
-      captureGestures='open'
-      tapToClose={true}
-      negotiatePan={true}
-      panOpenMask={0.25}
+      <DrawerLayoutAndroid  
+      drawerWidth={300}
+      drawerPosition={DrawerLayoutAndroid.positions.Left}
+      renderNavigationView={() => (<SideBar/>)}
+      ref={'DRAWER_REF'}
       >
         <Container>
-          <AppHeader leftButtonPress={this.openDrawer} title={'Bem Vindo'}/>
+          { this.renderHeader() }
           <Tabs/>
           <Footer>
             <FooterTab>
               <Button full>
-                <Text style={{color: 'white'}}>UFPA - Developers</Text>
+                <Text style={{color: 'white'}}>UFPA - Developers - {this.props.screenTitle}</Text>
               </Button>
             </FooterTab>
           </Footer>
         </Container>
-      
-      </Drawer>
+      </DrawerLayoutAndroid>
     );
   }
 }
 
 const mapStateToTprops = (state) => {
   return {
-    userStatus: state.authenticate.userStatus
+    userStatus: state.authenticate.userStatus,
+    screenTitle: state.navigateTo.title
   }
 }
 

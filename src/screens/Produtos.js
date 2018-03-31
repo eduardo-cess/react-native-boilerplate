@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Modal, TouchableHighlight } from "react-native";
 import {
   Container,
   Header,
@@ -15,7 +15,8 @@ import {
   Text,
   ListItem,
   List,
-  Thumbnail
+  Thumbnail,
+  Spinner
 } from "native-base";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -23,6 +24,16 @@ import { logOut, getAllProdutos, navigateToProdutoScreen } from "../store/action
 import { navigateTo } from '../store/reducers';
 
 class Produtos extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      modalVisible: false
+    }
+  }
+  setLoadingModalVisible(visible) {
+    this.setState({modalVisible: visible});
+  }
+
   produtos = [
     {"id": 1, "nome": "Tomates", "preco": 0.50, "produtor": "Produtor X"},
     {"id": 2, "nome": "Cheiro Verde", "preco": 1.50, "produtor": "Produtor Y"},
@@ -47,15 +58,27 @@ class Produtos extends Component {
   }
 
   navigateToProduto = () => {
-    const {navigation: {navigate, state: {key}}} = this.props;
-    navigate("ProdutoScreen", {from: key})
-    // alert(key)
+    this.setLoadingModalVisible(true)
     this.navigateToProdutoScreenHandler()
+    setTimeout(() => this.props.navigation.navigate("ProdutoScreen"),1)
+    this.setLoadingModalVisible(false)
+
   }
   render() {
     return (
       <Container>
         <Content>
+          <Modal
+          animationType="slide"
+          transparent={true}
+          visible={this.state.modalVisible}
+          onRequestClose={() => {}}>
+            <View style={{ flex: 1, justifyContent: "center" }}>
+            </View>
+            <View style={{ flex: 1, justifyContent: "center", flexDirection: "row" }}>
+              <Spinner/>
+            </View>
+          </Modal>
           <List  >
             {
               this.props.produtos.map(produto => {

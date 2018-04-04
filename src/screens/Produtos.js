@@ -58,10 +58,10 @@ class Produtos extends Component {
   }
 
   navigateToProduto = () => {
-    this.setLoadingModalVisible(true)
-    this.navigateToProdutoScreenHandler()
+    // this.setLoadingModalVisible(true)
     setTimeout(() => this.props.navigation.navigate("ProdutoScreen"),1)
-    this.setLoadingModalVisible(false)
+    this.navigateToProdutoScreenHandler()
+    // this.setLoadingModalVisible(false)
 
   }
   render() {

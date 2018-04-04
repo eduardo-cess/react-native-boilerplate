@@ -37,8 +37,8 @@ class ProdutoreScreen extends Component {
     this.props.onNavigateToMainScreen()
   }
   backToMainScreen = () => {
-    this.navigateToMainScreenHandler()
     this.props.navigation.goBack()
+    this.navigateToMainScreenHandler()
   }
   render() {
     return (

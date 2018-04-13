@@ -31,12 +31,12 @@ class SideBar extends Component {
           style={{ height: 200, width: null, flex: 1 }}
         />
         <List>
-          <ListItem icon>
+          <ListItem icon onPress={() => this.props.goToFeirasScreen()}>
             <Left>
               <Icon name="wifi" />
             </Left>
             <Body>
-              <Text style={styles.menuFont}>Wi-Fi</Text>
+              <Text style={styles.menuFont}>Feiras</Text>
             </Body>
           </ListItem>
           <ListItem icon>

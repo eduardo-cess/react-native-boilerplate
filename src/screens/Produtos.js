@@ -47,9 +47,6 @@ class Produtos extends Component {
     {"id": 10, "nome": "Tomates", "preco": 0.50, "produtor": "Produtor XYZ"}
   ]
 
-  logOutHandler = () => {
-    this.props.onLogOut()
-  }
   getAllProdutosHandler = () => {
     this.props.onGetAllProdutos()
   }
@@ -121,7 +118,6 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
   return {
-    onLogOut: () => dispatch(logOut()),
     onGetAllProdutos: () => dispatch(getAllProdutos()),
     onNavigateToProdutoScreen: () => dispatch(navigateToProdutoScreen())
   };

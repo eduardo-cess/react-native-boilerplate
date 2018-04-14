@@ -33,7 +33,7 @@ class SideBar extends Component {
         <List>
           <ListItem icon onPress={() => this.props.goToFeirasScreen()}>
             <Left>
-              <Icon name="wifi" />
+              <Icon name="md-heart" style={styles.iconStyle}/>
             </Left>
             <Body>
               <Text style={styles.menuFont}>Feiras</Text>
@@ -41,7 +41,7 @@ class SideBar extends Component {
           </ListItem>
           <ListItem icon>
             <Left>
-              <Icon name="bluetooth" />
+              <Icon name="bluetooth" style={styles.iconStyle}/>
             </Left>
             <Body>
               <Text style={styles.menuFont}>Bluetooth</Text>
@@ -49,7 +49,7 @@ class SideBar extends Component {
           </ListItem>
           <ListItem icon>
             <Left>
-              <Icon name="settings" />
+              <Icon name="settings" style={styles.iconStyle}/>
             </Left>
             <Body>
               <Text style={styles.menuFont}>Configurações</Text>
@@ -57,7 +57,7 @@ class SideBar extends Component {
           </ListItem>
           <ListItem icon onPress={this.logOutHandler}>
             <Left>
-              <Icon name="exit" />
+              <Icon name="exit" style={styles.iconStyle}/>
             </Left>
             <Body>
               <Text style={styles.menuFont}>Sair</Text>
@@ -71,8 +71,11 @@ class SideBar extends Component {
 
 const styles = StyleSheet.create({
   menuFont: {
-    fontSize: 14,
-    fontWeight: "bold"
+    fontSize: 15,
+    // fontWeight: "bold"
+  },
+  iconStyle: {
+    color: "#616161"
   }
 });
 

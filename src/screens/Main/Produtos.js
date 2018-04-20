@@ -45,9 +45,12 @@ class Produtos extends Component {
   logOutHandler = () => {
     this.props.onLogOut()
   }
-  // getAllProdutosHandler = () => {
-  //   this.props.onGetAllProdutos()
-  // }
+  navigate = () => {
+    if (this.props.goToPage == null || this.props.goToPage == undefined)
+      return this.props.navigation.navigate("ProdutoScreen")
+    else
+      return this.props.goToPage()
+  }
 
   render() {
     return (
@@ -57,7 +60,7 @@ class Produtos extends Component {
             {
               this.props.produtos.map(produto => {
                 return (
-                  <ListItem avatar key={produto.id} onPress={() => this.props.navigation.navigate("ProdutoScreen")}>
+                  <ListItem avatar key={produto.id} onPress={() => this.navigate()}>
                     <Left>
                       <Thumbnail source={{ uri: 'https://tudoparasuaempresa.com.br/assets/img/!product-image.jpg' }} />
                     </Left>

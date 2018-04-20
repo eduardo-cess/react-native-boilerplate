@@ -51,6 +51,27 @@ export const MainTabs = TabNavigator(
   }
 );
 
+export const FeiraContent = StackNavigator({
+  FeiraScreen: {
+    screen: FeiraScreen,
+    navigationOptions: {
+      headerTitle: 'Feira',
+    }
+  },
+  ProdutosScreen: {
+    screen: ProdutosScreen,
+  },
+  ProdutoScreen: {
+    screen: ProdutoScreen,
+    navigationOptions: {
+      headerTitle: 'Produto',
+    }
+  },
+},
+  {
+    headerMode: "none"
+  })
+
 export const MainContent = StackNavigator(
   {
     MainTabs: {
@@ -65,7 +86,7 @@ export const MainContent = StackNavigator(
       }
     },
     FeiraScreen: {
-      screen: FeiraScreen,
+      screen: FeiraContent,
       navigationOptions: {
         headerTitle: 'Feira',
       }
@@ -120,6 +141,34 @@ export const Root = SwitchNavigator(
     headerMode: "none"
   }
 );
+
+// export const FeiraTabs = TabNavigator({
+//   FeiraInfoTabScreen: {
+//     screen: FeiraInfoTabScreen,
+//     navigationOptions: {
+//       tabBarLabel: "Informações"
+//     }
+//   },
+//   FeiraProdutosTabScreen: {
+//     screen: FeiraProdutosTabScreen,
+//     navigationOptions: {
+//       tabBarLabel: "Produtos"
+//     }
+//   },
+//   ProdutoresScreen: {
+//     screen: ProdutoresScreen,
+//     navigationOptions: {
+//       tabBarLabel: "Produtores"
+//     }
+//   }
+// },
+//   {
+//     tabBarOptions: {
+//       style: {
+//         backgroundColor: primaryColor
+//       }
+//     }
+//   })
 
 
 

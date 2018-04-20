@@ -1,44 +1,78 @@
 import React, { Component } from "react";
-import { View, BackHandler, Text, Button } from 'react-native'
+import { View, StyleSheet } from 'react-native'
+import {
+  Container,
+  Content,
+  Left,
+  Right,
+  Body,
+  Icon,
+  Text,
+  ListItem,
+  List,
+  Thumbnail,
+} from "native-base";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { increment, decrement, navigateToMainScreen } from "../../store/actions";
+// import { navigateToMainScreen } from "../store/actions";
 
 class FeirasScreen extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      feiras: [
+        { "id": 1, "nome": "Feira da UFPA", "data": "23/04/2018" },
+        { "id": 2, "nome": "Feira da Batista Campos", "data": "24/04/2018" },
+        { "id": 3, "nome": "Feira da Praça da Bandeira", "data": "25/04/2018" },
+        { "id": 5, "nome": "Feira X", "data": "25/04/2018" },
+        { "id": 6, "nome": "Feira Y", "data": "26/04/2018" },
+      ]
+    }
+  }
 
-  // componentDidMount(){
-  //   BackHandler.addEventListener('hardwareBackPress', () => {
-  //     this.navigateToMainScreenHandler()
-  //   });
-  // }
-
-  // navigateToMainScreenHandler = () => {
-  //   this.props.onNavigateToMainScreen()
-  // }
-  // backToMainScreen = () => {
-  //   this.props.navigation.goBack()
-  //   this.navigateToMainScreenHandler()
-  // }
   render() {
     return (
-      <View>
-        <Text>Feiras</Text>
-        <Button title={"Feiras"} onPress={() => this.props.navigation.navigate("FeiraScreen")} />
-      </View>
+      <Container>
+        <Content>
+          <List  >
+            {
+              this.state.feiras.map(feira => {
+                return (
+                  <ListItem avatar key={feira.id} onPress={() => this.props.navigation.navigate('FeiraScreen')}>
+                    <Left>
+                      <Thumbnail source={{ uri: 'https://tudoparasuaempresa.com.br/assets/img/!product-image.jpg' }} />
+                    </Left>
+                    <Body >
+                      <Text >{feira.nome}</Text>
+                      <Text style={styles.data}>{feira.data}</Text>
+                    </Body>
+                    {/* <Right>
+                      <Text style={styles.data}>{feira.data}</Text>
+                    </Right> */}
+                  </ListItem>
+                )
+              })
+            }
+          </List>
+        </Content>
+      </Container>
     );
   }
 }
 const mapStateToProps = state => {
-  return {
-    // valor: state.counter.valor
-  };
+  return {};
 };
 const mapDispatchToProps = dispatch => {
   return {
-    // onIncrement: () => dispatch(increment()),
-    // onDecrement: () => dispatch(decrement()),
     // onNavigateToMainScreen: () => dispatch(navigateToMainScreen())
   };
 };
+
+const styles = StyleSheet.create({
+  data: {
+    fontSize: 15,
+    color: 'gray',
+  }
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(FeirasScreen);

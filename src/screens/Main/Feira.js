@@ -1,32 +1,68 @@
 import React, { Component } from "react";
-import { View, BackHandler, Text } from 'react-native'
+import { View, BackHandler, Image } from 'react-native'
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { increment, decrement, navigateToMainScreen } from "../../store/actions";
+import {
+  Content,
+  Text,
+  List,
+  ListItem,
+  Left,
+  Right,
+  Icon,
+  Switch,
+  Body,
+  Container,
+  Tab, Tabs
+} from 'native-base';
+import FeiraInfoTab from "./FeiraInfoTab";
+import Produtores from "./Produtores";
+import Produtos from "./Produtos";
+// import { FeiraTabs } from "../../config/routes";
+import Carousel from "../../components/carousel"
 
 class FeiraScreen extends Component {
-
-  // componentDidMount(){
-  //   BackHandler.addEventListener('hardwareBackPress', () => {
-  //     this.navigateToMainScreenHandler()
-  //   });
-  // }
-
-  // navigateToMainScreenHandler = () => {
-  //   this.props.onNavigateToMainScreen()
-  // }
-  // backToMainScreen = () => {
-  //   this.props.navigation.goBack()
-  //   this.navigateToMainScreenHandler()
-  // }
+  constructor(props) {
+    super(props)
+    this.state = {
+      images: [
+        { source: "https://igx.4sqi.net/img/general/600x600/12150528_pB7hmkY0J44uEtPmVuQvEAzERrCG2SGKqCavoIE3ICM.jpg" },
+        { source: "https://www.matraqueando.com.br/wp-content/uploads/2013/10/Feira-do-Acai-Belem-Para-04.jpg" },
+        { source: "https://i.pinimg.com/originals/37/1d/b1/371db165333a0c0b7267f2cf75b5c857.jpg" },
+      ]
+    }
+  }
   render() {
     return (
-      <View>
-        <Text>Feira</Text>
-      </View>
+      <Container>
+        <Content style={{ backgroundColor: "white" }}>
+          {/* <Image
+            source={{
+              uri:
+                "https://igx.4sqi.net/img/general/600x600/12150528_pB7hmkY0J44uEtPmVuQvEAzERrCG2SGKqCavoIE3ICM.jpg"
+            }}
+            style={{ height: 200, width: null, flex: 1 }}
+          /> */}
+          <Carousel images={this.state.images} styles={{ height: 170, width: null, flex: 1 }} />
+          {/* <FeiraTabs /> */}
+          <Tabs initialPage={0}>
+            <Tab heading="INFORMAÇÕES">
+              <FeiraInfoTab />
+            </Tab>
+            <Tab heading="PRODUTOS">
+              <Produtos goToPage={() => this.props.navigation.navigate('ProdutoScreen')} />
+            </Tab>
+            {/* <Tab heading="PRODUTORES">
+              <Produtores />
+            </Tab> */}
+          </Tabs>
+        </Content>
+      </Container>
     );
   }
 }
+
 const mapStateToProps = state => {
   return {
     // valor: state.counter.valor

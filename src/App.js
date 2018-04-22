@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-
+import { Root as NativeBaseRoot } from 'native-base'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Root } from './config/routes';
@@ -15,7 +15,9 @@ class App extends React.Component {
   }
   render() {
     return (
-      <Root />
+      <NativeBaseRoot>
+        <Root />
+      </NativeBaseRoot>
     );
   }
 }

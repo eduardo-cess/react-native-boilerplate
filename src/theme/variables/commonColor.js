@@ -6,8 +6,9 @@ const deviceHeight = Dimensions.get("window").height;
 const deviceWidth = Dimensions.get("window").width;
 const platform = Platform.OS;
 const platformStyle = undefined;
-export const primaryColor = '#2E7D32'
+export const primaryColor = '#00C853'
 export const secondaryColor = '#2E7D32'
+const defaultFontFamily = 'sans-serif-light'
 
 export default {
 	platformStyle,
@@ -118,7 +119,7 @@ export default {
 	brandSidebar: "#252932",
 
 	// Font
-	fontFamily: platform === "ios" ? "System" : "Roboto",
+	fontFamily: platform === "ios" ? "System" : defaultFontFamily,
 	fontSizeBase: 15,
 
 	get fontSizeH1() {

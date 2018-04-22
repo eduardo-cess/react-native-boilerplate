@@ -16,12 +16,12 @@ import {
   Container,
   Tab, Tabs
 } from 'native-base';
+import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import ImageSlider from 'react-native-image-slider';
 import FeiraInfoTab from "./FeiraInfoTab";
 import Produtores from "./Produtores";
 import Produtos from "./Produtos";
-// import { FeiraTabs } from "../../config/routes";
-import Carousel from "../../components/carousel"
+
 
 class FeiraScreen extends Component {
   constructor(props) {
@@ -34,37 +34,32 @@ class FeiraScreen extends Component {
       ]
     }
   }
+
+  goBack = () => this.props.navigation.goBack(null);
+
   render() {
+    BackHandler.addEventListener('hardwareBackPress', function () {
+      return this.goBack;
+    });
     return (
-      <Container>
-        <Content style={{ backgroundColor: "white" }}>
-          {/* <Image
-            source={{
-              uri:
-                "https://igx.4sqi.net/img/general/600x600/12150528_pB7hmkY0J44uEtPmVuQvEAzERrCG2SGKqCavoIE3ICM.jpg"
-            }}
-            style={{ height: 200, width: null, flex: 1 }}
-          /> */}
-          <View style={{ height: 185, width: null, flex: 1 }}>
-            <ImageSlider
-              images={this.state.images}
-              autoPlayWithInterval={4000}
-            />
-          </View>
-          {/* <FeiraTabs /> */}
-          <Tabs initialPage={0}>
-            <Tab heading="INFORMAÇÕES">
-              <FeiraInfoTab />
-            </Tab>
-            <Tab heading="PRODUTOS">
-              <Produtos goToPage={() => this.props.navigation.navigate('ProdutoScreen')} />
-            </Tab>
-            {/* <Tab heading="PRODUTORES">
-              <Produtores />
-            </Tab> */}
-          </Tabs>
-        </Content>
-      </Container>
+
+      <ParallaxScrollView
+        parallaxHeaderHeight={200}
+        renderForeground={() => (
+          <ImageSlider
+            images={this.state.images}
+            autoPlayWithInterval={5000}
+          />
+        )}>
+        <Tabs initialPage={0}>
+          <Tab heading="INFORMAÇÕES">
+            <FeiraInfoTab />
+          </Tab>
+          <Tab heading="PRODUTOS" >
+            <Produtos goToPage={() => this.props.navigation.navigate('ProdutoScreen')} />
+          </Tab>
+        </Tabs>
+      </ParallaxScrollView>
     );
   }
 }

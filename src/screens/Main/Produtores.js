@@ -42,7 +42,7 @@ class ProdutoresScreen extends Component {
             {
               this.state.produtores.map(produtor => {
                 return (
-                  <ListItem avatar key={produtor.id} onPress={() => this.props.navigation.navigate('ProdutorScreen')}>
+                  <ListItem avatar key={produtor.id} onPress={() => this.props.screenProps.rootNavigation.navigate('ProdutorScreen')}>
                     <Left>
                       <Thumbnail source={{ uri: 'https://tudoparasuaempresa.com.br/assets/img/!product-image.jpg' }} />
                     </Left>

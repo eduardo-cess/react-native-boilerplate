@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, ScrollView } from "react-native";
 import {
   Container,
   Header,
@@ -20,6 +20,7 @@ import {
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { logOut, getAllProdutos } from "../../store/actions";
+import { primaryColor } from '../../theme/variables/commonColor';
 
 class Produtos extends Component {
   constructor(props) {
@@ -29,55 +30,42 @@ class Produtos extends Component {
     }
   }
 
-  produtos = [
-    { "id": 1, "nome": "Tomates", "preco": 0.50, "produtor": "Produtor X" },
-    { "id": 2, "nome": "Cheiro Verde", "preco": 1.50, "produtor": "Produtor Y" },
-    { "id": 3, "nome": "Pepino", "preco": 1.50, "produtor": "Produtor Z" },
-    { "id": 4, "nome": "Mel", "preco": 5.0, "produtor": "Produtor X" },
-    { "id": 5, "nome": "Milho", "preco": 2.0, "produtor": "Produtor XY" },
-    { "id": 6, "nome": "Semente de Girassol/KG", "preco": 5.50, "produtor": "Produtor Z" },
-    { "id": 7, "nome": "Beterraba", "preco": 6.50, "produtor": "Produtor XYZ" },
-    { "id": 8, "nome": "Tomates", "preco": 0.50, "produtor": "Produtor ZZ" },
-    { "id": 9, "nome": "Tomates", "preco": 0.50, "produtor": "Produtor Y" },
-    { "id": 10, "nome": "Tomates", "preco": 0.50, "produtor": "Produtor XYZ" }
-  ]
-
   logOutHandler = () => {
     this.props.onLogOut()
   }
   navigate = () => {
-    if (this.props.goToPage == null || this.props.goToPage == undefined)
-      return this.props.navigation.navigate("ProdutoScreen")
+    if (this.props.goToPage == null || this.props.goToPage == undefined) {
+      console.log(this.props.navigation)
+      return this.props.screenProps.rootNavigation.navigate("ProdutoScreen")
+    }
     else
       return this.props.goToPage()
   }
 
   render() {
     return (
-      <Container>
-        <Content>
-          <List >
-            {
-              this.props.produtos.map(produto => {
-                return (
-                  <ListItem avatar key={produto.id} onPress={() => this.navigate()}>
-                    <Left>
-                      <Thumbnail source={{ uri: 'https://tudoparasuaempresa.com.br/assets/img/!product-image.jpg' }} />
-                    </Left>
-                    <Body >
-                      <Text >{produto.nome}</Text>
-                      <Text note>{produto.produtor}</Text>
-                    </Body>
-                    <Right>
-                      <Text style={styles.money}>R${produto.preco.toFixed(2)}</Text>
-                    </Right>
-                  </ListItem>
-                )
-              })
-            }
-          </List>
-        </Content>
-      </Container>
+      <ScrollView>
+        <List>
+          {
+            this.props.produtos.map(produto => {
+              return (
+                <ListItem avatar key={produto.id} onPress={() => this.navigate()}>
+                  <Left>
+                    <Thumbnail source={{ uri: 'https://tudoparasuaempresa.com.br/assets/img/!product-image.jpg' }} />
+                  </Left>
+                  <Body >
+                    <Text >{produto.nome}</Text>
+                    <Text note>{produto.produtor}</Text>
+                  </Body>
+                  <Right>
+                    <Text style={styles.money}>R${produto.preco.toFixed(2)}</Text>
+                  </Right>
+                </ListItem>
+              )
+            })
+          }
+        </List>
+      </ScrollView>
     );
   }
 }
@@ -85,7 +73,7 @@ class Produtos extends Component {
 const styles = StyleSheet.create({
   money: {
     fontSize: 17,
-    color: 'green',
+    color: primaryColor,
     fontWeight: 'bold',
   }
 });

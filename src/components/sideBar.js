@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from 'react-native';
 import { Image } from "react-native";
 import {
   Content,
@@ -15,6 +15,7 @@ import {
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { logOut } from "../store/actions";
+import { primaryColor } from '../theme/variables/commonColor';
 
 class SideBar extends Component {
   logOutHandler = () => {
@@ -23,41 +24,46 @@ class SideBar extends Component {
   render() {
     return (
       <Content style={{ backgroundColor: "white" }}>
-        <Image
-          source={{
-            uri:
-              "https://static.wixstatic.com/media/647c38_179df1cfc5ee4e89ae5443c32a83343f~mv2.png/v1/fill/w_630,h_388,al_c,usm_0.66_1.00_0.01/647c38_179df1cfc5ee4e89ae5443c32a83343f~mv2.png"
-          }}
-          style={{ height: 200, width: null, flex: 1 }}
-        />
+        <View style={{ height: 123, width: null, flex: 1, backgroundColor: primaryColor, flexDirection: 'row', justifyContent: 'space-evenly', }}>
+          <View style={{ alignItems: "center", justifyContent: 'center' }}>
+            <Image
+              source={require('../static/img/user-256.png')}
+              style={{ height: 65, width: 65, }}
+            />
+          </View>
+          <View style={{ justifyContent: 'center' }}>
+            <Text style={{ color: "white", fontSize: 23, fontFamily: 'sans-serif' }}>Olá, Carlos!</Text>
+            <Text style={{ color: "white", fontSize: 15 }}>carlos@email.com</Text>
+          </View>
+        </View>
         <List>
-          <ListItem icon onPress={() => this.props.goToFeirasScreen()}>
+          <ListItem icon>
             <Left>
-              <Icon name="wifi" />
+              <Icon name="person" style={styles.icon} />
             </Left>
             <Body>
-              <Text style={styles.menuFont}>Feiras</Text>
+              <Text style={styles.menuFont}>Minha conta</Text>
             </Body>
           </ListItem>
           <ListItem icon>
             <Left>
-              <Icon name="bluetooth" />
-            </Left>
-            <Body>
-              <Text style={styles.menuFont}>Bluetooth</Text>
-            </Body>
-          </ListItem>
-          <ListItem icon>
-            <Left>
-              <Icon name="settings" />
+              <Icon name="settings" style={styles.icon} />
             </Left>
             <Body>
               <Text style={styles.menuFont}>Configurações</Text>
             </Body>
           </ListItem>
+          <ListItem icon>
+            <Left>
+              <Icon name="share" style={styles.icon} />
+            </Left>
+            <Body>
+              <Text style={styles.menuFont}>Compartilhe</Text>
+            </Body>
+          </ListItem>
           <ListItem icon onPress={this.logOutHandler}>
             <Left>
-              <Icon name="exit" />
+              <Icon name="exit" style={styles.icon} />
             </Left>
             <Body>
               <Text style={styles.menuFont}>Sair</Text>
@@ -71,8 +77,11 @@ class SideBar extends Component {
 
 const styles = StyleSheet.create({
   menuFont: {
-    fontSize: 14,
-    fontWeight: "bold"
+    fontSize: 16,
+    // fontWeight: "bold"
+  },
+  icon: {
+    color: "#616161"
   }
 });
 

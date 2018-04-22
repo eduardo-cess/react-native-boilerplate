@@ -8,6 +8,7 @@ import {
 import { Button, Icon, Text } from 'native-base';
 
 import FeirasScreen from '../screens/Main/Feiras'
+import MainTabsScreen from '../screens/Main/MainTabs';
 import FeiraScreen from '../screens/Main/Feira'
 import MainScreen from '../screens/Main/Main'
 import ProdutoScreen from '../screens/Main/Produto'
@@ -18,6 +19,7 @@ import CadastroScreen from '../screens/Initial/Cadastro'
 import EsqueceuSenhaScreen from '../screens/Initial/EsqueceuSenha'
 import InitialScreen from '../screens/Initial/Initial'
 import LoginScreen from '../screens/Initial/Login'
+
 import { primaryColor } from '../theme/variables/commonColor';
 
 
@@ -75,7 +77,7 @@ export const FeiraContent = StackNavigator({
 export const MainContent = StackNavigator(
   {
     MainTabs: {
-      screen: MainTabs,
+      screen: MainTabsScreen,
       navigationOptions: {
         headerTitle: "Bem Vindo",
         headerLeft: (

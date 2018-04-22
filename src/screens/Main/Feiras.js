@@ -38,7 +38,7 @@ class FeirasScreen extends Component {
             {
               this.state.feiras.map(feira => {
                 return (
-                  <ListItem avatar key={feira.id} onPress={() => this.props.navigation.navigate('FeiraScreen')}>
+                  <ListItem avatar key={feira.id} onPress={() => this.props.screenProps.rootNavigation.navigate('FeiraScreen')}>
                     <Left>
                       <Thumbnail source={{ uri: 'https://tudoparasuaempresa.com.br/assets/img/!product-image.jpg' }} />
                     </Left>

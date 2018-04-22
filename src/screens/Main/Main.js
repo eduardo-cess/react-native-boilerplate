@@ -28,20 +28,8 @@ class MainScreen extends Component {
 
   render() {
     return (
-      <DrawerLayoutAndroid
-        drawerWidth={300}
-        drawerPosition={DrawerLayoutAndroid.positions.Left}
-        renderNavigationView={() => (
-          <SideBar
-            goToFeirasScreen={() =>
-              this.props.navigation.navigate("FeiraScreen")
-            }
-          />
-        )}
-        ref={"DRAWER_REF"}
-      >
-        <MainContent />
-      </DrawerLayoutAndroid>
+
+      <MainContent />
     );
   }
   // static navigationOptions = ({ navigation }) => {

@@ -78,14 +78,14 @@ export const MainContent = StackNavigator(
   {
     MainTabs: {
       screen: MainTabsScreen,
-      navigationOptions: {
-        headerTitle: "Bem Vindo",
-        headerLeft: (
-          <Button light transparent>
-            <Icon name='menu' />
-          </Button>
-        ),
-      }
+      // navigationOptions: {
+      //   headerTitle: "Bem Vindo",
+      //   headerLeft: (
+      //     <Button light transparent>
+      //       <Icon name='menu' />
+      //     </Button>
+      //   ),
+      // }
     },
     FeiraScreen: {
       screen: FeiraContent,
@@ -107,8 +107,8 @@ export const MainContent = StackNavigator(
     },
   },
   {
-    headerMode: "float",
-    headerTransitionPreset: "uikit",
+    headerMode: "screen",
+    // headerTransitionPreset: "uikit",
     navigationOptions: {
       headerTitleStyle: {
         color: '#FFF'

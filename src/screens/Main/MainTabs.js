@@ -5,11 +5,26 @@ import FeirasScreen from './Feiras'
 import ProdutoresScreen from './Produtores'
 import { primaryColor } from '../../theme/variables/commonColor';
 import { MainTabs } from "../../config/routes";
-import { DrawerLayoutAndroid } from 'react-native';
+import { DrawerLayoutAndroid, View, TouchableHighlight } from 'react-native';
 import SideBar from "../../components/sideBar";
+import { Button, Icon, Text } from 'native-base';
+import AppHeader from '../../components/header';
 
 
 class MainTabsScreen extends Component {
+  constructor() {
+    super();
+    this.openDrawer = this.openDrawer.bind(this);
+  }
+
+  static navigationOptions = {
+    header: null
+  };
+
+  openDrawer() {
+    this.drawer.openDrawer();
+  }
+
   render() {
     return (
       <DrawerLayoutAndroid
@@ -18,8 +33,9 @@ class MainTabsScreen extends Component {
         renderNavigationView={() => (
           <SideBar goToMainScreen={() => this.props.navigation.navigate("MainTabs")} />
         )}
-        ref={"DRAWER_REF"}
+        ref={(_drawer) => this.drawer = _drawer}
       >
+        <AppHeader title="Bem Vindo" leftButtonPress={() => this.openDrawer()} />
         <MainTabs screenProps={{ rootNavigation: this.props.navigation }} />
       </DrawerLayoutAndroid>
 

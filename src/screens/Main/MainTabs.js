@@ -31,7 +31,10 @@ class MainTabsScreen extends Component {
         drawerWidth={300}
         drawerPosition={DrawerLayoutAndroid.positions.Left}
         renderNavigationView={() => (
-          <SideBar goToMainScreen={() => this.props.navigation.navigate("MainTabs")} />
+          <SideBar
+            goToMainScreen={() => this.props.navigation.navigate("MainTabs")}
+            goToMinhaContaScreen={() => this.props.navigation.navigate("MinhaContaScreen")}
+          />
         )}
         ref={(_drawer) => this.drawer = _drawer}
       >

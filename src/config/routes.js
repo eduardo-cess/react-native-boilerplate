@@ -1,5 +1,4 @@
 import React from "react";
-// import { Text } from "react-native";
 import {
   TabNavigator,
   StackNavigator,
@@ -15,6 +14,8 @@ import ProdutoScreen from '../screens/Main/Produto'
 import ProdutosScreen from '../screens/Main/Produtos'
 import ProdutorScreen from '../screens/Main/Produtor'
 import ProdutoresScreen from '../screens/Main/Produtores'
+import MinhaContaScreen from '../screens/Main/MinhaConta'
+
 import CadastroScreen from '../screens/Initial/Cadastro'
 import EsqueceuSenhaScreen from '../screens/Initial/EsqueceuSenha'
 import InitialScreen from '../screens/Initial/Initial'
@@ -78,14 +79,6 @@ export const MainContent = StackNavigator(
   {
     MainTabs: {
       screen: MainTabsScreen,
-      // navigationOptions: {
-      //   headerTitle: "Bem Vindo",
-      //   headerLeft: (
-      //     <Button light transparent>
-      //       <Icon name='menu' />
-      //     </Button>
-      //   ),
-      // }
     },
     FeiraScreen: {
       screen: FeiraContent,
@@ -105,10 +98,16 @@ export const MainContent = StackNavigator(
         headerTitle: 'Produtor',
       }
     },
+    MinhaContaScreen: {
+      screen: MinhaContaScreen,
+      navigationOptions: {
+        headerTitle: 'Minha Conta',
+      }
+    },
   },
   {
-    headerMode: "screen",
-    // headerTransitionPreset: "uikit",
+    headerMode: "float",
+    headerTransitionPreset: "uikit",
     navigationOptions: {
       headerTitleStyle: {
         color: '#FFF'
@@ -143,102 +142,3 @@ export const Root = SwitchNavigator(
     headerMode: "none"
   }
 );
-
-// export const FeiraTabs = TabNavigator({
-//   FeiraInfoTabScreen: {
-//     screen: FeiraInfoTabScreen,
-//     navigationOptions: {
-//       tabBarLabel: "Informações"
-//     }
-//   },
-//   FeiraProdutosTabScreen: {
-//     screen: FeiraProdutosTabScreen,
-//     navigationOptions: {
-//       tabBarLabel: "Produtos"
-//     }
-//   },
-//   ProdutoresScreen: {
-//     screen: ProdutoresScreen,
-//     navigationOptions: {
-//       tabBarLabel: "Produtores"
-//     }
-//   }
-// },
-//   {
-//     tabBarOptions: {
-//       style: {
-//         backgroundColor: primaryColor
-//       }
-//     }
-//   })
-
-
-
-
-
-
-
-
-
-// export const ProdutosTab = StackNavigator(
-//   {
-//     Produtos: { screen: Produtos },
-//     ProdutoScreen: {
-//       screen: ProdutoScreen,
-//       navigationOptions: {
-//         tabBarVisible: false,
-//         swipeEnabled: false
-//       }
-//     }
-//   },
-//   {
-//     headerMode: "none"
-//   }
-// );
-
-// export const Tabs = TabNavigator(
-//   {
-//     Produtos: {
-//       screen: ProdutosTab,
-//       navigationOptions: {
-//         tabBarLabel: "Produtos"
-//       }
-//     },
-//     Produtores: {
-//       screen: Produtores,
-//       navigationOptions: {
-//         tabBarLabel: "Produtores"
-//       }
-//     }
-//   },
-//   {
-//     tabBarOptions: {
-//       style: {
-//         backgroundColor: secondaryColor
-//       }
-//     }
-//   }
-// );
-
-// export const MainContent = StackNavigator(
-//   {
-//     Tabs: { screen: MainScreen },
-//     FeirasScreen: { screen: FeirasScreen }
-//   },
-//   {
-//     headerMode: "none"
-//   }
-// );
-
-// export const Root = SwitchNavigator(
-//   {
-//     Tabs: { screen: MainContent },
-//     InitialScreen: { screen: InitialScreen },
-//     Produtores: { screen: Produtores },
-//     Login: { screen: LoginScreen }
-//   },
-//   {
-//     // mode: 'modal',
-//     headerMode: "screen"
-//   }
-// );

@@ -36,8 +36,8 @@ class SideBar extends Component {
             <Text style={{ color: "white", fontSize: 15 }}>carlos@email.com</Text>
           </View>
         </View>
-        <List>
-          <ListItem icon>
+        <List >
+          <ListItem icon onPress={() => this.props.goToMinhaContaScreen()}>
             <Left>
               <Icon name="person" style={styles.icon} />
             </Left>

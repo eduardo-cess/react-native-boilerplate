@@ -1,15 +1,16 @@
-import firebase from 'firebase'
+import Firebase from 'firebase'
+import 'firebase/firestore'
 
 const config = {
-  authDomain: "YOUR DOMAIN",
-  databaseURL: "YOUR URL",
-  projectId: "YOUR ID",
-  storageBucket: "YOUR BUCKET",
-  messagingSenderId: "YOUR ID"
-}
+  apiKey: "AIzaSyBR4QGsdrUvRaLPMlHOTUNw20a29aYYdIo",
+  authDomain: "appagriculturafamiliar.firebaseapp.com",
+  databaseURL: "https://appagriculturafamiliar.firebaseio.com",
+  projectId: "appagriculturafamiliar",
+  storageBucket: "appagriculturafamiliar.appspot.com",
+  messagingSenderId: "703635634619"
+};
 
-firebase.initializeApp(config)
+Firebase.initializeApp(config)
 
-const database = firebase.database()
-
-export default database
+export const db = Firebase.firestore()
+export const auth = Firebase.auth()

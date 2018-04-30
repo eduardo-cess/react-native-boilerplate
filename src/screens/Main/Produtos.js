@@ -30,9 +30,27 @@ class Produtos extends Component {
     }
   }
 
+  componentWillMount () {
+    this.onGetAllProdutosHandler()
+  }
+  
+  componentDidMount () {
+    console.log("produtos",this.props.produtos)
+
+  }
+
+  componentWillUpdate () {
+    console.log("produtos 2",this.props.produtos[0])
+  }
+
   logOutHandler = () => {
     this.props.onLogOut()
   }
+
+  onGetAllProdutosHandler = () => {
+    this.props.onGetAllProdutos()
+  }
+
   navigate = () => {
     if (this.props.goToPage == null || this.props.goToPage == undefined) {
       console.log(this.props.navigation)
@@ -80,13 +98,13 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   return {
-    produtos: produtos,
+    produtos: state.produtos.produtos,
   };
 };
 const mapDispatchToProps = dispatch => {
   return {
     onLogOut: () => dispatch(logOut()),
-    // onGetAllProdutos: () => dispatch(getAllProdutos()),
+    onGetAllProdutos: () => dispatch(getAllProdutos()),
   };
 };
 

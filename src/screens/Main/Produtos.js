@@ -57,7 +57,7 @@ class Produtos extends Component {
       return this.props.screenProps.rootNavigation.navigate("ProdutoScreen", {produto: produto})
     }
     else
-      return this.props.goToPage()
+      return this.props.goToPage().navigate('ProdutoScreen', {produto: produto})
   }
 
   render() {

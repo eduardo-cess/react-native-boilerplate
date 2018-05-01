@@ -56,7 +56,7 @@ class FeiraScreen extends Component {
             <FeiraInfoTab />
           </Tab>
           <Tab heading="PRODUTOS" >
-            <Produtos goToPage={() => this.props.navigation.navigate('ProdutoScreen')} />
+            <Produtos goToPage={() => this.props.navigation} />
           </Tab>
         </Tabs>
       </ParallaxScrollView>

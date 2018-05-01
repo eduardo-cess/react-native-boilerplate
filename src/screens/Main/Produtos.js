@@ -51,10 +51,10 @@ class Produtos extends Component {
     this.props.onGetAllProdutos()
   }
 
-  navigate = () => {
+  navigate = (produto) => {
     if (this.props.goToPage == null || this.props.goToPage == undefined) {
       console.log(this.props.navigation)
-      return this.props.screenProps.rootNavigation.navigate("ProdutoScreen")
+      return this.props.screenProps.rootNavigation.navigate("ProdutoScreen", {produto: produto})
     }
     else
       return this.props.goToPage()
@@ -67,16 +67,17 @@ class Produtos extends Component {
           {
             this.props.produtos.map(produto => {
               return (
-                <ListItem avatar key={produto.id} onPress={() => this.navigate()}>
+                <ListItem avatar key={produto.id} onPress={() => this.navigate(produto)}>
                   <Left>
                     <Thumbnail source={{ uri: 'https://tudoparasuaempresa.com.br/assets/img/!product-image.jpg' }} />
                   </Left>
                   <Body >
                     <Text >{produto.nome}</Text>
-                    <Text note>{produto.produtor}</Text>
+                    <Text note>de {produto.produtor}</Text>
                   </Body>
                   <Right>
                     <Text style={styles.money}>R${produto.preco.toFixed(2)}</Text>
+                    <Text note>por {produto.tipo.toUpperCase()}</Text>
                   </Right>
                 </ListItem>
               )

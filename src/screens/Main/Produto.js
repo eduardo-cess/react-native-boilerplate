@@ -32,6 +32,8 @@ class ProdutoScreen extends Component {
     });
   }
   render() {
+    const { params } = this.props.navigation.state;
+    const produto = params.produto
     return (
       <Container>
         <Content style={{ backgroundColor: "white" }}>
@@ -45,12 +47,12 @@ class ProdutoScreen extends Component {
 
           <View style={{ padding: 15 }}>
             <View style={styles.titleView}>
-              <Text style={styles.title}>Tomate</Text>
+              <Text style={styles.title}>{produto.nome}</Text>
             </View>
             <View style={styles.priceView}>
-              <Text style={styles.price}>R$5.00</Text>
+              <Text style={styles.price}>R${produto.preco.toFixed(2)}</Text>
               <View style={{ justifyContent: "flex-end" }}>
-                <Text > por KG</Text>
+                <Text > por {produto.tipo.toUpperCase()}</Text>
               </View>
             </View>
             <Form>
@@ -92,7 +94,7 @@ class ProdutoScreen extends Component {
                     <Icon name="person" style={styles.icon} />
                   </Left>
                   <Body >
-                    <Text style={styles.fontInfo}>Nonato Júnior da Silva</Text>
+                    <Text style={styles.fontInfo}>{produto.produtor}</Text>
                   </Body>
                 </ListItem>
                 <ListItem avatar>
@@ -106,8 +108,17 @@ class ProdutoScreen extends Component {
               </List>
             </View>
             <View style={{ marginTop: 10 }}>
-              <Text style={styles.subTitle}>Descrição do Produto:</Text>
-              <Text style={styles.fontInfo}>Lorem ipsum viverra laoreet maecenas auctor metus fringilla sapien mauris eleifend, phasellus augue ultricies aliquet class lacinia himenaeos platea ac, cubilia etiam quisque id eleifend ac in ut luctus. ultrices class nam tortor ipsum fringilla rhoncus inceptos, per vel porta habitasse luctus hendrerit maecenas, tortor cursus fermentum sodales tempus tincidunt. </Text>
+              <Text style={styles.subTitle}>Detalhes do Produto:</Text>
+              <List  >
+                <ListItem avatar>
+                  <Left>
+                    <Icon name="information-circle" style={styles.icon} />
+                  </Left>
+                  <Body >
+                    <Text style={styles.fontInfo}>{(produto.detalhes == '-') ? 'Nenhum detalhe fornecido' : produto.detalhes}</Text>
+                  </Body>
+                </ListItem>
+              </List>
             </View>
             <View style={{ marginTop: 10 }}>
               <Text style={styles.subTitle}>Outros produtos deste vendedor:</Text>

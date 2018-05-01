@@ -27,7 +27,7 @@ export default class Setup extends Component {
   //   this.setState({ isReady: true });
   // }
   render() {
-    if (Platform.OS === 'android') StatusBar.setHidden(true)
+    // if (Platform.OS === 'android') StatusBar.setHidden(true)
     // if (!this.state.isReady) {
     //   return <Expo.AppLoading />;
     // }

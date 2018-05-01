@@ -8,6 +8,14 @@ export const getAllProdutosFirebase = async () => {
     return produtos
 }
 
+// export function listenToDatabaseChanges (dispatch) {
+//     produtosRef
+//       .onSnapshot(function(doc) {
+//           console.log("Current data: ", doc.data());
+//       });
+  
+//   }
+
 export const getProduto = (idProduto) => {}
 
 const firebaseDataToArray = function (querySnapshot) {

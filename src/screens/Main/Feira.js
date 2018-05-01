@@ -38,11 +38,11 @@ class FeiraScreen extends Component {
   goBack = () => this.props.navigation.goBack(null);
 
   render() {
-    BackHandler.addEventListener('hardwareBackPress', function () {
-      return this.goBack;
+    BackHandler.addEventListener('hardwareBackPress', () => {
+      return this.goBack();
     });
+    
     return (
-
       <ParallaxScrollView
         parallaxHeaderHeight={200}
         renderForeground={() => (

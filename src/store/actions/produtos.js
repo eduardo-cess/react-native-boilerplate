@@ -12,3 +12,11 @@ export const getAllProdutos = () => {
     })
   };
 };
+
+// export function listenToDatabaseChanges (dispatch) {
+//   db.collection("cities").doc("SF")
+//     .onSnapshot(function(doc) {
+//         console.log("Current data: ", doc.data());
+//     });
+
+// }

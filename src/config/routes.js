@@ -37,12 +37,6 @@ export const MainTabs = TabNavigator(
       navigationOptions: {
         tabBarLabel: "Feiras"
       }
-    },
-    ProdutoresScreen: {
-      screen: ProdutoresScreen,
-      navigationOptions: {
-        tabBarLabel: "Produtores"
-      }
     }
   },
   {

@@ -34,14 +34,12 @@ class ProdutoScreen extends Component {
   render() {
     const { params } = this.props.navigation.state;
     const produto = params.produto
+
     return (
       <Container>
         <Content style={{ backgroundColor: "white" }}>
           <Image
-            source={{
-              uri:
-                "https://2.bp.blogspot.com/-BoRHgyCRWjI/Tow8J2n1gfI/AAAAAAAAEyc/MSHjp5dHeAU/s640/tomates.jpg"
-            }}
+            source={ (produto.imagem != null) ? {'uri': produto.imagem} : require('../../static/img/missing-image-640x360.png') }
             style={{ height: 200, width: null, flex: 1 }}
           />
 

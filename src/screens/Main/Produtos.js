@@ -69,7 +69,7 @@ class Produtos extends Component {
               return (
                 <ListItem avatar key={produto.id} onPress={() => this.navigate(produto)}>
                   <Left>
-                    <Thumbnail source={{ uri: 'https://tudoparasuaempresa.com.br/assets/img/!product-image.jpg' }} />
+                    <Thumbnail source={ (produto.imagem != null) ? {'uri': produto.imagem} : require('../../static/img/missing-image-640x360.png') } />
                   </Left>
                   <Body >
                     <Text >{produto.nome}</Text>

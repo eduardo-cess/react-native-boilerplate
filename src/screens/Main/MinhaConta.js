@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { View, BackHandler, Text, StyleSheet, Image } from 'react-native';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { increment, decrement, navigateToMainScreen } from "../../store/actions";
 import {
   Content,
   Separator,
@@ -16,6 +15,7 @@ import {
   Left,
   Right
 } from 'native-base';
+import { getUserData } from "../../store/actions";
 import { primaryColor } from '../../theme/variables/commonColor';
 
 class MinhaContaScreen extends Component {
@@ -26,7 +26,17 @@ class MinhaContaScreen extends Component {
     };
   }
 
+  componentWillMount () {
+    this.onGetUserDataHandler()
+  }
+
+  onGetUserDataHandler = () => {
+    this.props.onGetUserData()
+  }
+
   render() {
+    let user = this.props.user
+    let endereco = user.endereco
     return (
       <Content style={{ backgroundColor: "white" }}>
         {/* <List> */}
@@ -51,7 +61,7 @@ class MinhaContaScreen extends Component {
           <Body>
             <View>
               <Text style={styles.title}>Nome e Sobrenome</Text>
-              <Text style={styles.content}>Carlos Santiago</Text>
+              <Text style={styles.content}>{user.nome}</Text>
             </View>
           </Body>
           <Right>
@@ -64,7 +74,7 @@ class MinhaContaScreen extends Component {
           <Body>
             <View>
               <Text style={styles.title}>Email</Text>
-              <Text style={styles.content}>carlos@email.com</Text>
+              <Text style={styles.content}>{user.email}</Text>
             </View>
 
           </Body>
@@ -78,7 +88,7 @@ class MinhaContaScreen extends Component {
           <Body>
             <View>
               <Text style={styles.title}>Telefone</Text>
-              <Text style={styles.content}>(91) 99999-9999</Text>
+              <Text style={styles.content}>({user.telefone.ddd}) {user.telefone.numero}</Text>
             </View>
           </Body>
           <Right>
@@ -93,8 +103,8 @@ class MinhaContaScreen extends Component {
         <ListItem>
           <Body>
             <View>
-              <Text style={styles.title}>Rua XXXXX, 78</Text>
-              <Text style={styles.content}>66666-666 - Belém - Pará</Text>
+              <Text style={styles.title}>{endereco.rua}, {endereco.numero}</Text>
+              <Text style={styles.content}>{endereco.cep} - {endereco.cidade} - {endereco.estado}</Text>
             </View>
           </Body>
           <Right>
@@ -130,11 +140,12 @@ const styles = StyleSheet.create({
 })
 const mapStateToProps = state => {
   return {
-    // valor: state.counter.valor
+    user: state.user.user
   };
 };
 const mapDispatchToProps = dispatch => {
   return {
+    onGetUserData: () => dispatch(getUserData())
     // onIncrement: () => dispatch(increment()),
     // onDecrement: () => dispatch(decrement()),
     // onNavigateToMainScreen: () => dispatch(navigateToMainScreen())

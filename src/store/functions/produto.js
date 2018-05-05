@@ -1,4 +1,4 @@
-import {db} from "../../config/firebase"
+import { db, firebaseDataToArray } from './shared'
 
 var produtosRef = db.collection("produtos");
 
@@ -18,10 +18,3 @@ export const getAllProdutosFirebase = async () => {
 
 export const getProduto = (idProduto) => {}
 
-const firebaseDataToArray = function (querySnapshot) {
-    let data = []
-    querySnapshot.forEach(doc => {
-        data.push(doc.data())
-    })
-    return data
-}

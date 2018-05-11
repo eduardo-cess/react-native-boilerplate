@@ -36,11 +36,13 @@ class Produtos extends Component {
   
   componentDidMount () {
     console.log("produtos",this.props.produtos)
-
+    
   }
-
-  componentWillUpdate () {
+  
+  componentWillUpdate (nextProps) {
     console.log("produtos 2",this.props.produtos[0])
+    console.log(nextProps.searchText)
+    // alert(this.props.searchText)
   }
 
   logOutHandler = () => {
@@ -61,11 +63,14 @@ class Produtos extends Component {
   }
 
   render() {
+    let filteredProdutos = this.props.produtos.filter(produto => {
+      return produto.nome.search(this.props.searchText) != -1
+    })
     return (
       <ScrollView>
         <List>
           {
-            this.props.produtos.map(produto => {
+            filteredProdutos.map(produto => {
               return (
                 <ListItem avatar key={produto.id} onPress={() => this.navigate(produto)}>
                   <Left>
@@ -100,6 +105,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
   return {
     produtos: state.produtos.produtos,
+    searchText: state.search.text
   };
 };
 const mapDispatchToProps = dispatch => {

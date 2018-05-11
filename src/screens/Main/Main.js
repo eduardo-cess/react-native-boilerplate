@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { View, Button, BackHandler, Text, DrawerLayoutAndroid } from 'react-native'
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { increment, decrement, navigateToMainScreen } from "../../store/actions";
+// import { increment, decrement, navigateToMainScreen } from "../../store/actions";
 import { MainContent } from "../../config/routes"
 import SideBar from "../../components/sideBar"
 
@@ -47,7 +47,7 @@ class MainScreen extends Component {
 const mapStateToProps = state => {
   return {
     userStatus: state.authenticate.userStatus,
-    screenTitle: state.navigateTo.title
+    // screenTitle: state.navigateTo.title
   };
 };
 

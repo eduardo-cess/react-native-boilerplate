@@ -2,13 +2,13 @@ import { combineReducers } from 'redux'
 import user from './user'
 import authenticate from './authentication';
 import produtos from './produtos';
-import navigateTo from './navigation';
+import search from './search';
 
 const rootReducer = combineReducers({
   user,
   authenticate,
   produtos,
-  navigateTo
+  search
 })
 
 export default rootReducer

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { View, BackHandler, Text } from 'react-native'
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { increment, decrement, navigateToMainScreen } from "../../store/actions";
+// import { increment, decrement, navigateToMainScreen } from "../../store/actions";
 
 class EsqueceuSenhaScreen extends Component {
 

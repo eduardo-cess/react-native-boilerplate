@@ -11,13 +11,13 @@ import authenticate from "../../store/reducers/authentication";
 class MainScreen extends Component {
 
   componentDidMount() {
-    this.auth();
+    // this.auth();
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.userStatus === "isLoggedOut") {
-      this.props.navigation.navigate("InitialContent");
-    }
+    // if (nextProps.userStatus === "isLoggedOut") {
+    //   this.props.navigation.navigate("InitialContent");
+    // }
   }
 
   auth = () => {

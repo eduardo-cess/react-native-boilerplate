@@ -12,6 +12,7 @@
     "native-base": "^2.3.10",
     "react": "16.3.1",
     "react-native": "0.55.3",
+    "react-native-image-crop-picker": "^0.20.1",
     "react-native-image-slider": "^2.0.3",
     "react-native-parallax-scroll-view": "^0.21.0",
     "react-navigation": "^1.5.11",

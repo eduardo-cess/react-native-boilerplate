@@ -37,7 +37,7 @@ class SideBar extends Component {
           </View>
         </View>
         <List >
-          <ListItem icon onPress={() => this.props.goToMinhaContaScreen()}>
+          <ListItem icon onPress={this.props.goToMinhaContaScreen}>
             <Left>
               <Icon name="person" style={styles.icon} />
             </Left>

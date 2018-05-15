@@ -7,17 +7,26 @@ import { MainContent } from "../../config/routes"
 import SideBar from "../../components/sideBar"
 
 import authenticate from "../../store/reducers/authentication";
+import { getUserData } from "../../store/actions";
 
 class MainScreen extends Component {
 
   componentDidMount() {
     // this.auth();
   }
+  
+  componentWillMount () {
+    this.onGetUserDataHandler()
+  }
 
   componentWillReceiveProps(nextProps) {
     // if (nextProps.userStatus === "isLoggedOut") {
     //   this.props.navigation.navigate("InitialContent");
     // }
+  }
+
+  onGetUserDataHandler = () => {
+    this.props.onGetUserData()
   }
 
   auth = () => {
@@ -52,7 +61,9 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
-  return {};
+  return {
+    onGetUserData: () => dispatch(getUserData())
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainScreen);

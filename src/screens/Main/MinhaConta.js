@@ -19,7 +19,7 @@ import ImagePicker from 'react-native-image-crop-picker'
 import RNFetchBlob from 'react-native-fetch-blob'
 import { getUserData } from "../../store/actions";
 import { primaryColor } from '../../theme/variables/commonColor';
-import { storage } from '../../config/firebase';
+import { storage, db } from '../../config/firebase';
 
 class MinhaContaScreen extends Component {
   constructor(props) {
@@ -38,14 +38,15 @@ class MinhaContaScreen extends Component {
     this.props.onGetUserData()
   }
 
-  openPicker(){
+  openPicker(userId){
     this.setState({ loading: true })
     const Blob = RNFetchBlob.polyfill.Blob
     const fs = RNFetchBlob.fs
     window.XMLHttpRequest = RNFetchBlob.polyfill.XMLHttpRequest
     window.Blob = Blob
     //const { uid } = this.state.user
-    const uid = "12345"
+    const uid = userId
+    const userRef = db.collection('usuarios').doc(uid)
     ImagePicker.openPicker({
       width: 300,
       height: 300,
@@ -57,7 +58,7 @@ class MinhaContaScreen extends Component {
 
       let uploadBlob = null
 
-      const imageRef = storage.ref(uid).child("dp.jpg")
+      const imageRef = storage.ref("users/imagens/").child(uid+".jpg")
       let mime = 'image/jpg'
       fs.readFile(imagePath, 'base64')
         .then((data) => {
@@ -68,21 +69,23 @@ class MinhaContaScreen extends Component {
           uploadBlob = blob
           return imageRef.put(blob, { contentType: mime })
         })
-        .then(() => {
+        .then(async () => {
           uploadBlob.close()
-          return imageRef.getDownloadURL()
-        })
-        .then((url) => {
-
-          let userData = {}
-          //userData[dpNo] = url
-          //firebase.database().ref('users').child(uid).update({ ...userData})
-
+          let url = await imageRef.getDownloadURL()
+          console.log(url)
+          console.log(db.doc('/usuarios/'+uid))
+          // userRef.update({"imagem": url})
+          //   .then(function() {
+          //       console.log("Document successfully updated!");
+          //   })
+          //   .catch(function(error) {
+          //       // The document probably doesn't exist.
+          //       console.error("Error updating document: ", error);
+          //   });
           let obj = {}
           obj["loading"] = false
           obj["dp"] = url
           this.setState(obj)
-
         })
         .catch((error) => {
           console.log(error)
@@ -96,20 +99,33 @@ class MinhaContaScreen extends Component {
   render() {
     let user = this.props.user
     let endereco = user.endereco
+    let imagem = ''
+    if(this.state.dp != null){
+      imagem = (
+        <Image
+          source={{'uri': this.state.dp}}
+          style={{ height: 250, flex: 1, width: null }}
+        />
+      )
+    }else{
+      imagem = (
+        <Image
+          source={(user.imagem != '-') ? {'uri': user.imagem} : require('../../static/img/missing-image-640x360.png')}
+          style={{ height: 250, flex: 1, width: null }}
+        />
+      )
+    }
     return (
       <Content style={{ backgroundColor: "white" }}>
         {/* <List> */}
         <View >
-          <Image
-            source={require("../../static/img/goku-480x350.jpg")}
-            style={{ height: 250, flex: 1, width: null }}
-          />
+          {imagem}
           <Fab
             active={this.state.active}
             containerStyle={{}}
             style={{ backgroundColor: primaryColor }}
             position="bottomRight"
-            onPress={() => this.openPicker()}>
+            onPress={() => this.openPicker(user.id)}>
             <Icon name="create" />
           </Fab>
         </View>

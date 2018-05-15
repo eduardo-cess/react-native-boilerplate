@@ -22,18 +22,20 @@ class SideBar extends Component {
     this.props.onLogOut();
   };
   render() {
+    let user = this.props.user
+    console.log(user)
     return (
       <Content style={{ backgroundColor: "white" }}>
         <View style={{ height: 123, width: null, flex: 1, backgroundColor: primaryColor, flexDirection: 'row', justifyContent: 'space-evenly', }}>
           <View style={{ alignItems: "center", justifyContent: 'center' }}>
             <Image
-              source={require('../static/img/user-256.png')}
+              source={ (user.imagem != "-") ? {'uri': user.imagem} : require('../static/img/user-256.png') }
               style={{ height: 65, width: 65, }}
             />
           </View>
           <View style={{ justifyContent: 'center' }}>
-            <Text style={{ color: "white", fontSize: 23, fontFamily: 'sans-serif' }}>Olá, Carlos!</Text>
-            <Text style={{ color: "white", fontSize: 15 }}>carlos@email.com</Text>
+            <Text style={{ color: "white", fontSize: 23, fontFamily: 'sans-serif' }}>Olá, {user.nome}!</Text>
+            <Text style={{ color: "white", fontSize: 15 }}>{user.email}</Text>
           </View>
         </View>
         <List >
@@ -87,7 +89,8 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   return {
-    userStatus: state.authenticate.userStatus
+    userStatus: state.authenticate.userStatus,
+    user: state.user.user
   };
 };
 

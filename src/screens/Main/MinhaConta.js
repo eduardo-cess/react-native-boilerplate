@@ -20,23 +20,28 @@ import RNFetchBlob from 'react-native-fetch-blob'
 import { getUserData, updateUser } from "../../store/actions";
 import { primaryColor } from '../../theme/variables/commonColor';
 import { storage, db } from '../../config/firebase';
+import Modal from "react-native-modal";
+import { Spinner } from 'native-base';
 
 class MinhaContaScreen extends Component {
   constructor(props) {
     super(props)
     this.state = {
       loading: false,
-      dp: null
+      dp: null,
+      form: {
+        dadosConta: {
+          nome: "",
+          email: "",
+          telefone: ""
+        }
+      }
     };
   }
 
   componentWillMount () {
     this.onGetUserDataHandler()
   }
-  
-  // componentWillUpdate (nextProps) {
-  //   this.onGetUserDataHandler()
-  // }
 
   onGetUserDataHandler = () => {
     this.props.onGetUserData()
@@ -94,6 +99,10 @@ class MinhaContaScreen extends Component {
     })
   }
 
+  randomString = () => {
+    return Math.random().toString(36).substring(2, 15); 
+  }
+
   render() {
     let user = this.props.user
     let endereco = user.endereco
@@ -116,19 +125,35 @@ class MinhaContaScreen extends Component {
     return (
       <Content style={{ backgroundColor: "white" }}>
         {/* <List> */}
+        <Modal isVisible={this.state.loading}>
+          <View style={{ flex: 1, justifyContent: "center", alignItems: "center", }}>
+            <Text style={{color: "white"}}>Fazendo o Upload da imagem</Text>
+            <Spinner/>
+          </View>
+        </Modal>
+
         <View >
           {imagem}
           <Fab
             active={this.state.active}
             containerStyle={{}}
-            style={{ backgroundColor: primaryColor }}
+            style={{ backgroundColor: primaryColor, width: 40, height: 40 }}  
             position="bottomRight"
             onPress={() => this.openPicker(user)}>
             <Icon name="create" />
           </Fab>
         </View>
         <Separator style={styles.separator}>
-          <Text style={styles.separatorText}>Dados da Conta</Text>
+          <View style={{flexDirection: 'row', justifyContent: "space-between",}}>
+            <View style={{justifyContent: "center", alignItems: "center"}}> 
+              <Text style={styles.separatorText}>Dados da Conta</Text>
+            </View>
+            <View style={{justifyContent: "center",}}>
+              <Button transparent icon onPress={()=>this.onUpdateUserDataHandler({...user, nome: this.randomString()})}>
+                <Icon name="create" />
+              </Button>
+            </View>
+          </View>
         </Separator>
         <ListItem >
           <Body>
@@ -137,11 +162,11 @@ class MinhaContaScreen extends Component {
               <Text style={styles.content}>{user.nome}</Text>
             </View>
           </Body>
-          <Right>
+          {/* <Right>
             <Button transparent icon onPress={()=>this.onUpdateUserDataHandler({...user, nome: "jtcjcy"})}>
               <Icon name="create" />
             </Button>
-          </Right>
+          </Right> */}
         </ListItem>
         <ListItem>
           <Body>
@@ -151,11 +176,11 @@ class MinhaContaScreen extends Component {
             </View>
 
           </Body>
-          <Right>
+          {/* <Right>
             <Button transparent icon>
               <Icon name="create" />
             </Button>
-          </Right>
+          </Right> */}
         </ListItem>
         <ListItem last>
           <Body>
@@ -164,11 +189,11 @@ class MinhaContaScreen extends Component {
               <Text style={styles.content}>({user.telefone.ddd}) {user.telefone.numero}</Text>
             </View>
           </Body>
-          <Right>
+          {/* <Right>
             <Button transparent icon>
               <Icon name="create" />
             </Button>
-          </Right>
+          </Right> */}
         </ListItem>
         <Separator style={styles.separator}>
           <Text style={styles.separatorText}>Endereço</Text>
@@ -180,11 +205,11 @@ class MinhaContaScreen extends Component {
               <Text style={styles.content}>{endereco.cep} - {endereco.cidade} - {endereco.estado}</Text>
             </View>
           </Body>
-          <Right>
+          {/* <Right>
             <Button transparent icon>
               <Icon name="create" />
             </Button>
-          </Right>
+          </Right> */}
         </ListItem>
 
         {/* </List> */}

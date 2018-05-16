@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, BackHandler, Text, StyleSheet, Image } from 'react-native';
+import { View, BackHandler, StyleSheet, Image } from 'react-native';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import {
@@ -13,7 +13,16 @@ import {
   Toast,
   Body,
   Left,
-  Right
+  Right,
+  CardItem,
+  Card,
+  Form,
+  Item,
+  Label,
+  Input,
+  Header,
+  Title,
+  Text
 } from 'native-base';
 import ImagePicker from 'react-native-image-crop-picker'
 import RNFetchBlob from 'react-native-fetch-blob'
@@ -28,6 +37,7 @@ class MinhaContaScreen extends Component {
     super(props)
     this.state = {
       loading: false,
+      editing: false,
       dp: null,
       form: {
         dadosConta: {
@@ -120,6 +130,51 @@ class MinhaContaScreen extends Component {
           </View>
         </Modal>
 
+        <Modal 
+        isVisible={this.state.editing}
+        onBackButtonPress={()=>this.setState({editing: false})}>
+            <Content>
+              <Header>
+                <Left>
+                  <Button transparent onPress={() => this.setState({editing: false})}>
+                    <Icon name="md-arrow-back"/>
+                  </Button>
+                </Left>
+                <Body>
+                  <Title>Editar Informações</Title>
+                </Body>
+              </Header>
+              <View style={{flex: 1, backgroundColor: "white"}}>
+                  <Form>
+                    <Item floatingLabel>
+                      <Label>Nome</Label>
+                      <Input value={user.nome}/>
+                    </Item>
+                    <Item floatingLabel>
+                      <Label>Email</Label>
+                      <Input value={user.email}/>
+                    </Item>
+                    <Item floatingLabel>
+                      <Label>Telefone</Label>
+                      <Input value={user.telefone.numero}/>
+                    </Item>
+                  </Form>
+                <View style={{flexDirection: 'row', flex: 1, marginTop: 20,}}>
+                  <View style={{ flex: 1}}>
+                    <Button full danger onPress={() => this.setState({editing: false})}>
+                      <Text>Cancelar</Text>
+                    </Button>
+                  </View>
+                  <View style={{ flex: 1}}>
+                    <Button full success>
+                      <Text>Confirmar</Text> 
+                    </Button>
+                  </View>
+                </View>
+              </View>
+            </Content>
+        </Modal>
+
         <View >
           <Image
             key={user.imagem}
@@ -141,7 +196,7 @@ class MinhaContaScreen extends Component {
               <Text style={styles.separatorText}>Dados da Conta</Text>
             </View>
             <View style={{justifyContent: "center",}}>
-              <Button transparent icon onPress={()=>this.onUpdateUserDataHandler({...user, nome: this.randomString()})}>
+              <Button transparent icon onPress={()=>this.setState({editing: true})}>
                 <Icon name="create" />
               </Button>
             </View>
@@ -150,7 +205,7 @@ class MinhaContaScreen extends Component {
         <ListItem >
           <Body>
             <View>
-              <Text style={styles.title}>Nome e Sobrenome</Text>
+              <Text style={styles.title}>Nome</Text>
               <Text style={styles.content}>{user.nome}</Text>
             </View>
           </Body>

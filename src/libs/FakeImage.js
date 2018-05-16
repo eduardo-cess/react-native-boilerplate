@@ -1,18 +1,11 @@
-import Firebase from 'firebase'
-import 'firebase/firestore'
+import * as firebase from 'firebase';
+// Required for Side Effects
+import 'firebase/firestore';
+import 'firebase/auth';
 
 declare var global: any;
 
-const config = {
-  apiKey: "AIzaSyBR4QGsdrUvRaLPMlHOTUNw20a29aYYdIo",
-  authDomain: "appagriculturafamiliar.firebaseapp.com",
-  databaseURL: "https://appagriculturafamiliar.firebaseio.com",
-  projectId: "appagriculturafamiliar",
-  storageBucket: "appagriculturafamiliar.appspot.com",
-  messagingSenderId: "703635634619"
-};
-
-class FakeImage {
+export default class FakeImage {
     static ensureImageExists() {
         if (!global.Image) {
             global.Image = FakeImage;
@@ -38,10 +31,13 @@ class FakeImage {
         this._callbacks.push(callback);
     }
 }
+
 FakeImage.ensureImageExists();
 
-Firebase.initializeApp(config)
+const app = firebase.initializeApp({
+    // INSERT SETTINGS
+});
 
-export const db = Firebase.firestore()
-export const auth = Firebase.auth()
-export const storage = Firebase.storage()
+firebase.firestore.setLogLevel('debug');
+const firestore = firebase.firestore(app);
+const auth = firebase.auth(app);

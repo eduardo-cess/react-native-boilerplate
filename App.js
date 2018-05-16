@@ -7,7 +7,7 @@ import thunk from 'redux-thunk'
 import reducers from './src/store/reducers'
 import Setup from "./src/boot/setup"
 
-import { YellowBox } from 'react-native';
+import { YellowBox, Image } from 'react-native';
 YellowBox.ignoreWarnings(['Warning: isMounted(...) is deprecated', 'Module RCTImageLoader']);
 
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore)

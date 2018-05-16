@@ -56,11 +56,10 @@ class MinhaContaScreen extends Component {
     const fs = RNFetchBlob.fs
     window.XMLHttpRequest = RNFetchBlob.polyfill.XMLHttpRequest
     window.Blob = Blob
-    //const { uid } = this.state.user
     const uid = user.id
     ImagePicker.openPicker({
       width: 300,
-      height: 300,
+      height: 250,
       cropping: true,
       mediaType: 'photo'
     }).then(image => {
@@ -73,7 +72,6 @@ class MinhaContaScreen extends Component {
       let mime = 'image/jpg'
       fs.readFile(imagePath, 'base64')
         .then((data) => {
-          //console.log(data);
           return Blob.build(data, { type: `${mime};BASE64` })
       })
       .then((blob) => {
@@ -89,6 +87,12 @@ class MinhaContaScreen extends Component {
           obj["loading"] = false
           obj["dp"] = url
           this.setState(obj)
+         
+          ImagePicker.clean().then(() => {
+            console.log('removed all tmp images from tmp directory');
+          }).catch(e => {
+            alert(e);
+          });
         })
         .catch((error) => {
           console.log(error)
@@ -122,10 +126,12 @@ class MinhaContaScreen extends Component {
         />
       )
     }
+
     return (
       <Content style={{ backgroundColor: "white" }}>
-        {/* <List> */}
-        <Modal isVisible={this.state.loading}>
+        <Modal 
+        isVisible={this.state.loading}
+        onBackButtonPress={()=>this.setState({loading: false})}>
           <View style={{ flex: 1, justifyContent: "center", alignItems: "center", }}>
             <Text style={{color: "white"}}>Fazendo o Upload da imagem</Text>
             <Spinner/>
@@ -133,7 +139,10 @@ class MinhaContaScreen extends Component {
         </Modal>
 
         <View >
-          {imagem}
+          <Image
+            source={(user.imagem != '-') ? {'uri': user.imagem} : require('../../static/img/missing-image-640x360.png')}
+            style={{ height: 250, flex: 1, width: null }}
+          />
           <Fab
             active={this.state.active}
             containerStyle={{}}
@@ -162,11 +171,6 @@ class MinhaContaScreen extends Component {
               <Text style={styles.content}>{user.nome}</Text>
             </View>
           </Body>
-          {/* <Right>
-            <Button transparent icon onPress={()=>this.onUpdateUserDataHandler({...user, nome: "jtcjcy"})}>
-              <Icon name="create" />
-            </Button>
-          </Right> */}
         </ListItem>
         <ListItem>
           <Body>
@@ -176,11 +180,6 @@ class MinhaContaScreen extends Component {
             </View>
 
           </Body>
-          {/* <Right>
-            <Button transparent icon>
-              <Icon name="create" />
-            </Button>
-          </Right> */}
         </ListItem>
         <ListItem last>
           <Body>
@@ -189,11 +188,6 @@ class MinhaContaScreen extends Component {
               <Text style={styles.content}>({user.telefone.ddd}) {user.telefone.numero}</Text>
             </View>
           </Body>
-          {/* <Right>
-            <Button transparent icon>
-              <Icon name="create" />
-            </Button>
-          </Right> */}
         </ListItem>
         <Separator style={styles.separator}>
           <Text style={styles.separatorText}>Endereço</Text>
@@ -205,14 +199,7 @@ class MinhaContaScreen extends Component {
               <Text style={styles.content}>{endereco.cep} - {endereco.cidade} - {endereco.estado}</Text>
             </View>
           </Body>
-          {/* <Right>
-            <Button transparent icon>
-              <Icon name="create" />
-            </Button>
-          </Right> */}
         </ListItem>
-
-        {/* </List> */}
       </Content>
     );
   }
@@ -227,13 +214,11 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   separator: {
-    // backgroundColor: "gray",
     paddingBottom: 30,
     paddingTop: 30,
   },
   separatorText: {
     fontSize: 16,
-    // color: "white"
   }
 })
 const mapStateToProps = state => {

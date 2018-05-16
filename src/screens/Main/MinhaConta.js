@@ -43,6 +43,10 @@ class MinhaContaScreen extends Component {
     this.onGetUserDataHandler()
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.onUpdateUserDataHandler(nextProps.user)
+  }
+
   onGetUserDataHandler = () => {
     this.props.onGetUserData()
   }
@@ -67,8 +71,8 @@ class MinhaContaScreen extends Component {
       const imagePath = image.path
 
       let uploadBlob = null
-
-      const imageRef = storage.ref("users/imagens/").child(uid+".jpg")
+      let time = new Date().getTime()
+      const imageRef = storage.ref("users/imagens/").child(`${uid}-${time}.jpg`)
       let mime = 'image/jpg'
       fs.readFile(imagePath, 'base64')
         .then((data) => {
@@ -80,19 +84,13 @@ class MinhaContaScreen extends Component {
         })
         .then(async () => {
           uploadBlob.close()
-          let url = await imageRef.getDownloadURL()
-          console.log(url)
+          let url = await imageRef.getDownloadURL() 
+          console.log(url) 
           this.onUpdateUserDataHandler({...user, imagem: url})
           let obj = {}
           obj["loading"] = false
           obj["dp"] = url
-          this.setState(obj)
-         
-          ImagePicker.clean().then(() => {
-            console.log('removed all tmp images from tmp directory');
-          }).catch(e => {
-            alert(e);
-          });
+          this.setState(obj) 
         })
         .catch((error) => {
           console.log(error)
@@ -110,22 +108,6 @@ class MinhaContaScreen extends Component {
   render() {
     let user = this.props.user
     let endereco = user.endereco
-    let imagem = ''
-    if(this.state.dp != null){
-      imagem = (
-        <Image
-          source={{'uri': this.state.dp}}
-          style={{ height: 250, flex: 1, width: null }}
-        />
-      )
-    }else{
-      imagem = (
-        <Image
-          source={(user.imagem != '-') ? {'uri': user.imagem} : require('../../static/img/missing-image-640x360.png')}
-          style={{ height: 250, flex: 1, width: null }}
-        />
-      )
-    }
 
     return (
       <Content style={{ backgroundColor: "white" }}>
@@ -140,6 +122,7 @@ class MinhaContaScreen extends Component {
 
         <View >
           <Image
+            key={user.imagem}
             source={(user.imagem != '-') ? {'uri': user.imagem} : require('../../static/img/missing-image-640x360.png')}
             style={{ height: 250, flex: 1, width: null }}
           />

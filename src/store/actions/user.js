@@ -1,5 +1,5 @@
-import { GET_USER_DATA } from './actionTypes'
-import { getUserDataFirebase } from '../functions/user';
+import { GET_USER_DATA, UPDATE_USER_DATA } from './actionTypes'
+import { getUserDataFirebase, updateUserDataFirebase } from '../functions/user';
 
 export const getUserData = () => {
     return async dispatch => {
@@ -12,8 +12,13 @@ export const getUserData = () => {
       };
 }
 
-// export const decrement = () => {
-//     return {
-//         type: DECREMENT
-//     }
-// }
+export const updateUser = (user) => {
+  return async dispatch => {
+    updateUserDataFirebase(user)
+    console.log(user)
+    dispatch({
+      type: UPDATE_USER_DATA,
+      payload: user
+    })
+  };
+}

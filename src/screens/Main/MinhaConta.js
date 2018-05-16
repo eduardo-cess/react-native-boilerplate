@@ -17,7 +17,7 @@ import {
 } from 'native-base';
 import ImagePicker from 'react-native-image-crop-picker'
 import RNFetchBlob from 'react-native-fetch-blob'
-import { getUserData } from "../../store/actions";
+import { getUserData, updateUser } from "../../store/actions";
 import { primaryColor } from '../../theme/variables/commonColor';
 import { storage, db } from '../../config/firebase';
 
@@ -33,20 +33,26 @@ class MinhaContaScreen extends Component {
   componentWillMount () {
     this.onGetUserDataHandler()
   }
+  
+  // componentWillUpdate (nextProps) {
+  //   this.onGetUserDataHandler()
+  // }
 
   onGetUserDataHandler = () => {
     this.props.onGetUserData()
   }
+  onUpdateUserDataHandler = (user) => {
+    this.props.onUpdateUserData(user)
+  }
 
-  openPicker(userId){
+  openPicker(user){
     this.setState({ loading: true })
     const Blob = RNFetchBlob.polyfill.Blob
     const fs = RNFetchBlob.fs
     window.XMLHttpRequest = RNFetchBlob.polyfill.XMLHttpRequest
     window.Blob = Blob
     //const { uid } = this.state.user
-    const uid = userId
-    const userRef = db.collection('usuarios').doc(uid)
+    const uid = user.id
     ImagePicker.openPicker({
       width: 300,
       height: 300,
@@ -73,15 +79,7 @@ class MinhaContaScreen extends Component {
           uploadBlob.close()
           let url = await imageRef.getDownloadURL()
           console.log(url)
-          console.log(db.doc('/usuarios/'+uid))
-          // userRef.update({"imagem": url})
-          //   .then(function() {
-          //       console.log("Document successfully updated!");
-          //   })
-          //   .catch(function(error) {
-          //       // The document probably doesn't exist.
-          //       console.error("Error updating document: ", error);
-          //   });
+          this.onUpdateUserDataHandler({...user, imagem: url})
           let obj = {}
           obj["loading"] = false
           obj["dp"] = url
@@ -125,7 +123,7 @@ class MinhaContaScreen extends Component {
             containerStyle={{}}
             style={{ backgroundColor: primaryColor }}
             position="bottomRight"
-            onPress={() => this.openPicker(user.id)}>
+            onPress={() => this.openPicker(user)}>
             <Icon name="create" />
           </Fab>
         </View>
@@ -140,7 +138,7 @@ class MinhaContaScreen extends Component {
             </View>
           </Body>
           <Right>
-            <Button transparent icon>
+            <Button transparent icon onPress={()=>this.onUpdateUserDataHandler({...user, nome: "jtcjcy"})}>
               <Icon name="create" />
             </Button>
           </Right>
@@ -220,10 +218,8 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
   return {
-    onGetUserData: () => dispatch(getUserData())
-    // onIncrement: () => dispatch(increment()),
-    // onDecrement: () => dispatch(decrement()),
-    // onNavigateToMainScreen: () => dispatch(navigateToMainScreen())
+    onGetUserData: () => dispatch(getUserData()),
+    onUpdateUserData: (user) => dispatch(updateUser(user))
   };
 };
 

@@ -1,4 +1,4 @@
-import { GET_USER_DATA } from '../actions/actionTypes'
+import { GET_USER_DATA, UPDATE_USER_DATA } from '../actions/actionTypes'
 
 const initialState = {
   user: {
@@ -25,6 +25,8 @@ const initialState = {
 export default function user(state = initialState, action={}) {
     switch (action.type) {
       case GET_USER_DATA: 
+        return {...state, user: action.payload}
+      case UPDATE_USER_DATA: 
         return {...state, user: action.payload}
       default:
         return state

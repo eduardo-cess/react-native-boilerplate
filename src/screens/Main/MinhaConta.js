@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, BackHandler, StyleSheet, Image } from 'react-native';
+import { View, BackHandler, StyleSheet, Image, Modal } from 'react-native';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import {
@@ -29,7 +29,7 @@ import RNFetchBlob from 'react-native-fetch-blob'
 import { getUserData, updateUser } from "../../store/actions";
 import { primaryColor } from '../../theme/variables/commonColor';
 import { storage, db } from '../../config/firebase';
-import Modal from "react-native-modal";
+// import Modal from "react-native-modal";
 import { Spinner } from 'native-base';
 
 class MinhaContaScreen extends Component {
@@ -39,22 +39,24 @@ class MinhaContaScreen extends Component {
       loading: false,
       editing: false,
       dp: null,
-      form: {
-        dadosConta: {
-          nome: "",
-          email: "",
-          telefone: ""
-        }
-      }
+      form: {}
     };
   }
 
   componentWillMount () {
     this.onGetUserDataHandler()
+    let user = this.props.user
+    this.setState({
+      form: user
+    })
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.onUpdateUserDataHandler(nextProps.user)
+  componentDidMount () {
+  }
+
+  componentDidUpdate(nextProps, prevState) {
+    if(nextProps.user != this.props.user)
+      this.onUpdateUserDataHandler(this.props.user) 
   }
 
   onGetUserDataHandler = () => {
@@ -76,7 +78,7 @@ class MinhaContaScreen extends Component {
       height: 250,
       cropping: true,
       mediaType: 'photo'
-    }).then(image => {
+    }).then((image) => {
 
       const imagePath = image.path
 
@@ -92,81 +94,104 @@ class MinhaContaScreen extends Component {
           uploadBlob = blob
           return imageRef.put(blob, { contentType: mime })
         })
-        .then(async () => {
+        .then(() => {
           uploadBlob.close()
-          let url = await imageRef.getDownloadURL() 
-          console.log(url) 
-          this.onUpdateUserDataHandler({...user, imagem: url})
+          return imageRef.getDownloadURL()
+        })
+        .then((url) => {
+          console.log(url)
+
+          this.onUpdateUserDataHandler({...user, "imagem": url})
           let obj = {}
           obj["loading"] = false
           obj["dp"] = url
-          this.setState(obj) 
+          this.setState(obj)
+
         })
         .catch((error) => {
           console.log(error)
+          this.setState({loading: false})
         })
     })
     .catch((error) => {
       console.log(error)
+      this.setState({loading: false})
     })
   }
 
-  randomString = () => {
-    return Math.random().toString(36).substring(2, 15); 
+  onEditUserInfo = () => {
+    console.log(this.state)
   }
 
   render() {
     let user = this.props.user
     let endereco = user.endereco
-
+    let form = this.state.form
     return (
       <Content style={{ backgroundColor: "white" }}>
         <Modal 
-        isVisible={this.state.loading}
-        onBackButtonPress={()=>this.setState({loading: false})}>
-          <View style={{ flex: 1, justifyContent: "center", alignItems: "center", }}>
+        visible={this.state.loading}
+        animationType="slide"
+        transparent={true}
+        hardwareAccelerated={true}
+        onRequestClose={()=>this.setState({loading: false})}
+        >
+          <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: 'rgba(0,0,0,0.7)' }}>
             <Text style={{color: "white"}}>Fazendo o Upload da imagem</Text>
             <Spinner/>
           </View>
         </Modal>
 
         <Modal 
-        isVisible={this.state.editing}
-        onBackButtonPress={()=>this.setState({editing: false})}>
-            <Content>
+        visible={this.state.editing}
+        animationType="slide"
+        transparent={true}
+        hardwareAccelerated={true}
+        onRequestClose={()=>this.setState({editing: false})}
+        >
+            <Content style={styles.modal}>
               <Header>
-                <Left>
+                <View style={styles.modalHeader}>
                   <Button transparent onPress={() => this.setState({editing: false})}>
                     <Icon name="md-arrow-back"/>
                   </Button>
-                </Left>
-                <Body>
                   <Title>Editar Informações</Title>
-                </Body>
+                </View>
               </Header>
               <View style={{flex: 1, backgroundColor: "white"}}>
                   <Form>
                     <Item floatingLabel>
                       <Label>Nome</Label>
-                      <Input value={user.nome}/>
+                      <Input value={this.state.form.nome} onChange={ (val) => this.setState((prevState, props) => {return {...prevState.form, nome: val} }) }/>
                     </Item>
                     <Item floatingLabel>
                       <Label>Email</Label>
-                      <Input value={user.email}/>
+                      <Input value={form.email}/>
                     </Item>
-                    <Item floatingLabel>
-                      <Label>Telefone</Label>
-                      <Input value={user.telefone.numero}/>
-                    </Item>
+                    {/* <View style={{
+                    flexDirection: 'row', 
+                    alignItems: 'center', 
+                    flex: 1,
+                    backgroundColor: 'red'}}
+                    > */}
+                      {/* <Item floatingLabel>
+                        <Label>DDD</Label>
+                        <Input value={form.telefone.ddd}/>
+                      </Item>
+                      <Item floatingLabel>
+                        <Label>Telefone</Label>
+                        <Input value={form.telefone.numero} />
+                      </Item>  */}
+                    {/* </View> */}
                   </Form>
                 <View style={{flexDirection: 'row', flex: 1, marginTop: 20,}}>
                   <View style={{ flex: 1}}>
-                    <Button full danger onPress={() => this.setState({editing: false})}>
+                    <Button full light onPress={() => this.setState({editing: false})}>
                       <Text>Cancelar</Text>
                     </Button>
                   </View>
                   <View style={{ flex: 1}}>
-                    <Button full success>
+                    <Button full success onPress={() => this.onEditUserInfo()}>
                       <Text>Confirmar</Text> 
                     </Button>
                   </View>
@@ -257,7 +282,16 @@ const styles = StyleSheet.create({
   },
   separatorText: {
     fontSize: 16,
-  }
+  },
+  modal: {
+    backgroundColor: 'rgba(0,0,0,0.7)'
+  },
+  modalHeader: {
+    flexDirection: 'row', 
+    alignItems: 'center', 
+    flex: 1
+  },
+
 })
 const mapStateToProps = state => {
   return {

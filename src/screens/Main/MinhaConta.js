@@ -43,7 +43,7 @@ class MinhaContaScreen extends Component {
     };
   }
 
-  componentWillMount () {
+  componentWillMount() {
     this.onGetUserDataHandler()
     let user = this.props.user
     this.setState({
@@ -51,12 +51,12 @@ class MinhaContaScreen extends Component {
     })
   }
 
-  componentDidMount () {
+  componentDidMount() {
   }
 
   componentDidUpdate(nextProps, prevState) {
-    if(nextProps.user != this.props.user)
-      this.onUpdateUserDataHandler(this.props.user) 
+    if (nextProps.user != this.props.user)
+      this.onUpdateUserDataHandler(this.props.user)
   }
 
   onGetUserDataHandler = () => {
@@ -66,7 +66,7 @@ class MinhaContaScreen extends Component {
     this.props.onUpdateUserData(user)
   }
 
-  openPicker(user){
+  openPicker(user) {
     this.setState({ loading: true })
     const Blob = RNFetchBlob.polyfill.Blob
     const fs = RNFetchBlob.fs
@@ -89,8 +89,8 @@ class MinhaContaScreen extends Component {
       fs.readFile(imagePath, 'base64')
         .then((data) => {
           return Blob.build(data, { type: `${mime};BASE64` })
-      })
-      .then((blob) => {
+        })
+        .then((blob) => {
           uploadBlob = blob
           return imageRef.put(blob, { contentType: mime })
         })
@@ -101,7 +101,7 @@ class MinhaContaScreen extends Component {
         .then((url) => {
           console.log(url)
 
-          this.onUpdateUserDataHandler({...user, "imagem": url})
+          this.onUpdateUserDataHandler({ ...user, "imagem": url })
           let obj = {}
           obj["loading"] = false
           obj["dp"] = url
@@ -110,17 +110,34 @@ class MinhaContaScreen extends Component {
         })
         .catch((error) => {
           console.log(error)
-          this.setState({loading: false})
+          this.setState({ loading: false })
         })
     })
-    .catch((error) => {
-      console.log(error)
-      this.setState({loading: false})
-    })
+      .catch((error) => {
+        console.log(error)
+        this.setState({ loading: false })
+      })
   }
 
-  onEditUserInfo = () => {
+  onEditUserInfo = async () => {
     console.log(this.state)
+    await this.onUpdateUserDataHandler(this.state.form)
+    this.setState({ editing: false })
+  }
+
+  onChangeUserInfo = (info, val) => {
+    this.setState({ form: { ...this.state.form, [info]: val } })
+  }
+
+  onChangeTelefoneInfo = (info, val) => {
+    let newFormState = this.state.form
+    newFormState.telefone[info] = val
+    this.setState({ form: newFormState })
+  }
+
+  onCancelEditUserinfo = () => {
+    this.state.form = this.props.user
+    this.setState({ editing: false })
   }
 
   render() {
@@ -129,99 +146,100 @@ class MinhaContaScreen extends Component {
     let form = this.state.form
     return (
       <Content style={{ backgroundColor: "white" }}>
-        <Modal 
-        visible={this.state.loading}
-        animationType="slide"
-        transparent={true}
-        hardwareAccelerated={true}
-        onRequestClose={()=>this.setState({loading: false})}
+        <Modal
+          visible={this.state.loading}
+          animationType="slide"
+          transparent={true}
+          hardwareAccelerated={true}
+          onRequestClose={() => this.setState({ loading: false })}
         >
           <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: 'rgba(0,0,0,0.7)' }}>
-            <Text style={{color: "white"}}>Fazendo o Upload da imagem</Text>
-            <Spinner/>
+            <Text style={{ color: "white" }}>Fazendo o Upload da imagem</Text>
+            <Spinner />
           </View>
         </Modal>
 
-        <Modal 
-        visible={this.state.editing}
-        animationType="slide"
-        transparent={true}
-        hardwareAccelerated={true}
-        onRequestClose={()=>this.setState({editing: false})}
+        <Modal
+          visible={this.state.editing}
+          animationType="slide"
+          transparent={true}
+          hardwareAccelerated={true}
+          onRequestClose={() => this.setState({ editing: false })}
         >
-            <Content style={styles.modal}>
-              <Header>
-                <View style={styles.modalHeader}>
-                  <Button transparent onPress={() => this.setState({editing: false})}>
-                    <Icon name="md-arrow-back"/>
+          <Content style={styles.modal}>
+            <Header>
+              <View style={styles.modalHeader}>
+                <Button transparent onPress={() => this.onCancelEditUserinfo()}>
+                  <Icon name="md-arrow-back" />
+                </Button>
+                <Title>Editar Informações</Title>
+              </View>
+            </Header>
+            <View style={{ flex: 1, backgroundColor: "white" }}>
+              <Form>
+                <Item floatingLabel>
+                  <Label>Nome</Label>
+                  <Input value={this.state.form.nome} onChangeText={(val) => this.onChangeUserInfo("nome", val)}
+                    clearButtonMode="while-editing"
+                  />
+                </Item>
+                <Item floatingLabel>
+                  <Label>Email</Label>
+                  <Input value={form.email} onChangeText={(val) => this.onChangeUserInfo("email", val)}
+                    keyboardType="email-address"
+                  />
+                </Item>
+                <Item floatingLabel>
+                  <Label>DDD</Label>
+                  <Input value={form.telefone.ddd} onChangeText={(val) => this.onChangeTelefoneInfo("ddd", val)}
+                    keyboardType="phone-pad"
+                  />
+                </Item>
+                <Item floatingLabel>
+                  <Label>Telefone</Label>
+                  <Input value={form.telefone.numero} onChangeText={(val) => this.onChangeTelefoneInfo("numero", val)}
+                    keyboardType="phone-pad"
+                  />
+                </Item>
+              </Form>
+              <View style={{ flexDirection: 'row', flex: 1, marginTop: 20, }}>
+                <View style={{ flex: 1 }}>
+                  <Button full light onPress={() => this.onCancelEditUserinfo()}>
+                    <Text>Cancelar</Text>
                   </Button>
-                  <Title>Editar Informações</Title>
                 </View>
-              </Header>
-              <View style={{flex: 1, backgroundColor: "white"}}>
-                  <Form>
-                    <Item floatingLabel>
-                      <Label>Nome</Label>
-                      <Input value={this.state.form.nome} onChange={ (val) => this.setState((prevState, props) => {return {...prevState.form, nome: val} }) }/>
-                    </Item>
-                    <Item floatingLabel>
-                      <Label>Email</Label>
-                      <Input value={form.email}/>
-                    </Item>
-                    {/* <View style={{
-                    flexDirection: 'row', 
-                    alignItems: 'center', 
-                    flex: 1,
-                    backgroundColor: 'red'}}
-                    > */}
-                      {/* <Item floatingLabel>
-                        <Label>DDD</Label>
-                        <Input value={form.telefone.ddd}/>
-                      </Item>
-                      <Item floatingLabel>
-                        <Label>Telefone</Label>
-                        <Input value={form.telefone.numero} />
-                      </Item>  */}
-                    {/* </View> */}
-                  </Form>
-                <View style={{flexDirection: 'row', flex: 1, marginTop: 20,}}>
-                  <View style={{ flex: 1}}>
-                    <Button full light onPress={() => this.setState({editing: false})}>
-                      <Text>Cancelar</Text>
-                    </Button>
-                  </View>
-                  <View style={{ flex: 1}}>
-                    <Button full success onPress={() => this.onEditUserInfo()}>
-                      <Text>Confirmar</Text> 
-                    </Button>
-                  </View>
+                <View style={{ flex: 1 }}>
+                  <Button full success onPress={() => this.onEditUserInfo()}>
+                    <Text>Confirmar</Text>
+                  </Button>
                 </View>
               </View>
-            </Content>
+            </View>
+          </Content>
         </Modal>
 
         <View >
           <Image
             key={user.imagem}
-            source={(user.imagem != '-') ? {'uri': user.imagem} : require('../../static/img/missing-image-640x360.png')}
+            source={(user.imagem != '-') ? { 'uri': user.imagem } : require('../../static/img/missing-image-640x360.png')}
             style={{ height: 250, flex: 1, width: null }}
           />
           <Fab
             active={this.state.active}
             containerStyle={{}}
-            style={{ backgroundColor: primaryColor, width: 40, height: 40 }}  
+            style={{ backgroundColor: primaryColor, width: 40, height: 40 }}
             position="bottomRight"
             onPress={() => this.openPicker(user)}>
             <Icon name="create" />
           </Fab>
         </View>
         <Separator style={styles.separator}>
-          <View style={{flexDirection: 'row', justifyContent: "space-between",}}>
-            <View style={{justifyContent: "center", alignItems: "center"}}> 
+          <View style={{ flexDirection: 'row', justifyContent: "space-between", }}>
+            <View style={{ justifyContent: "center", alignItems: "center" }}>
               <Text style={styles.separatorText}>Dados da Conta</Text>
             </View>
-            <View style={{justifyContent: "center",}}>
-              <Button transparent icon onPress={()=>this.setState({editing: true})}>
+            <View style={{ justifyContent: "center", }}>
+              <Button transparent icon onPress={() => this.setState({ editing: true })}>
                 <Icon name="create" />
               </Button>
             </View>
@@ -287,8 +305,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0.7)'
   },
   modalHeader: {
-    flexDirection: 'row', 
-    alignItems: 'center', 
+    flexDirection: 'row',
+    alignItems: 'center',
     flex: 1
   },
 

@@ -119,10 +119,10 @@ export const MainContent = StackNavigator(
 
 export const InitialContent = StackNavigator(
   {
+    InitialScreen: { screen: InitialScreen },
     LoginEmailScreen: { screen: LoginEmailScreen },
     LoginSenhaScreen: {screen: LoginSenhaScreen },
     SplashScreen: { screen: SplashScreen},
-    InitialScreen: { screen: InitialScreen },
     CadastroScreen: { screen: CadastroScreen },
     EsqueceuSenhaScreen: { screen: EsqueceuSenhaScreen },
   },

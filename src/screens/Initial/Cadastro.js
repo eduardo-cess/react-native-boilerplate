@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import { View, BackHandler, Text } from 'react-native'
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import Icon from 'react-native-vector-icons';
 import { increment, decrement, navigateToMainScreen } from "../../store/actions";
+import { Container, Header, Content, Item, Form, Input } from "native-base";
 
 class CadastroScreen extends Component {
 
@@ -21,9 +23,25 @@ class CadastroScreen extends Component {
   // }
   render() {
     return (
-      <View>
-        <Text>Cadastro</Text>
-      </View>
+      <Container >
+        <Header/>
+        <Content style={{margin: 20}}>
+          <Form>
+            <Item rounded>
+             <Icon active name="person"/>
+             <Input placeholder="Nome"/> 
+            </Item>
+            <Item>
+            <Icon type="MaterialIcons" android="email"/>
+             <Input placeholder="Email"/> 
+            </Item>
+            <Item>
+             <Icon active name="password"/>
+             <Input placeholder="Senha"/> 
+            </Item>
+          </Form>
+        </Content>
+      </Container>
     );
   }
 }

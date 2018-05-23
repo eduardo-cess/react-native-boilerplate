@@ -1,21 +1,9 @@
 import React, { Component } from "react";
-import { View , StyleSheet} from "react-native";
-import { Button, Text, Spinner } from "native-base";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
+import { View , StyleSheet, Image} from "react-native";
+import {Container, Button, Text, Spinner, Footer } from "native-base";
 import { InitialContent } from "../../config/routes"
+import { SecundaryColor} from "../../theme/variables/commonColor"
 class InitialScreen extends Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = { isLoading: false };
-  // }
-
-  // logInHandler = () => {
-  //   this.setState({ isLoading: true });
-  //   this.props.onLogIn();
-  //   setTimeout(() => this.props.navigation.navigate("MainContent"), 1)
-  // }
-  
   signUpScreen = () => {
     this.props.navigation.navigate("CadastroScreen");
   }
@@ -23,52 +11,43 @@ class InitialScreen extends Component {
     this.props.navigation.navigate("LoginEmailScreen");
   }
   render() {
-  //   let mainContent = () => {
-  //     if (this.state.isLoading === false) {
-  //       return (
-  //         <Button onPress={this.logInHandler}>
-  //           <Text> Login </Text>
-  //         </Button>
-  //       )
-  //     } else {
-  //       return (<Spinner />)
-  //     }
-  //   }
-
     return (
+      <Container>
         <View style={styles.container}>
+          <Image 
+            style={styles.image} 
+            source={require("../../static/img/icone.png")}/>
+          <View>
+            <Text style={{fontSize:12, marginBottom: 50}}>Agricultura familiar para todos.</Text>
+          </View>
           <View style={styles.components}>
-            <Text>Seja bem vindo</Text>
+            <Button onPress={this.signUpScreen} info> 
+              <Text>CADASTRAR</Text>
+            </Button>
+          </View>
+          <View>
+            <Text style={{fontSize:12, marginBottom:5}}>Você já possui uma conta?</Text>
           </View>
           <View style={styles.components}>
             <Button onPress= {this.signInScreen}> 
-              <Text>Entrar</Text>
+              <Text>ENTRAR</Text>
             </Button>
           </View>
-          <View style={styles.components}>
-            <Button onPress={this.signUpScreen} > 
-              <Text>Cadastrar novo Usuário</Text>
-            </Button>
-          </View>
-
-      </View>
+        </View>
+        <View style={styles.footer}>
+          <Footer>
+          <Text style={styles.footerText}>
+            {`Usando o nosso app você concorda com os 
+              Termos de Uso
+            `} 
+          </Text>
+          </Footer>
+        </View>
+      </Container>
     )
   }
 }
-
-const mapStateToProps = state => {
-  return {
-    userStatus: state.authenticate.userStatus,
-  };
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    onLogIn: () => dispatch(logIn())
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(InitialScreen);
+export default (InitialScreen);
 
 const styles = StyleSheet.create({
   container: {
@@ -78,9 +57,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   components: {
-    flexDirection: "row",
-    justifyContent: "center",
     marginBottom: 30,
   },
-
+  footerText: {
+    fontSize:12,
+    color: 'white'
+  },
+  image: {
+    height: 150, 
+    width: 150,
+    borderRadius: 90, 
+  }
 });

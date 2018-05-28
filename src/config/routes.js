@@ -19,8 +19,7 @@ import MinhaContaScreen from '../screens/Main/MinhaConta'
 import CadastroScreen from '../screens/Initial/Cadastro'
 import EsqueceuSenhaScreen from '../screens/Initial/EsqueceuSenha'
 import InitialScreen from '../screens/Initial/Initial'
-import LoginEmailScreen from '../screens/Initial/LoginEmail'
-import LoginSenhaScreen from '../screens/Initial/LoginSenha'
+import LoginScreen from '../screens/Initial/LoginScreen'
 import SplashScreen from '../screens/Initial/SplashScreen' 
 
 import { primaryColor } from '../theme/variables/commonColor';
@@ -120,8 +119,7 @@ export const MainContent = StackNavigator(
 export const InitialContent = StackNavigator(
   {
     InitialScreen: { screen: InitialScreen },
-    LoginEmailScreen: { screen: LoginEmailScreen },
-    LoginSenhaScreen: {screen: LoginSenhaScreen },
+    LoginScreen: { screen: LoginScreen },
     SplashScreen: { screen: SplashScreen},
     CadastroScreen: { screen: CadastroScreen },
     EsqueceuSenhaScreen: { screen: EsqueceuSenhaScreen },

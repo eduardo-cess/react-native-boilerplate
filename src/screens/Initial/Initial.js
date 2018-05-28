@@ -8,7 +8,7 @@ class InitialScreen extends Component {
     this.props.navigation.navigate("CadastroScreen");
   }
   signInScreen = () => {
-    this.props.navigation.navigate("LoginEmailScreen");
+    this.props.navigation.navigate("LoginScreen");
   }
   render() {
     return (
@@ -28,7 +28,7 @@ class InitialScreen extends Component {
           <View>
             <Text style={{fontSize:12, marginBottom:5}}>Você já possui uma conta?</Text>
           </View>
-          <View style={styles.components}>
+          <View full bordered>
             <Button onPress= {this.signInScreen}> 
               <Text>ENTRAR</Text>
             </Button>

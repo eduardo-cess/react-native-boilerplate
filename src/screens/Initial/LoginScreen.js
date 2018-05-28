@@ -2,30 +2,37 @@ import React, { Component } from "react";
 import { BackHandler, StyleSheet, StatusBar } from 'react-native'
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import {LOG_IN} from '../../store/actions/index'
+import { MainContent } from "../../config/routes"
+import {logIn} from '../../store/actions/index'
 import {Form, Button, Text, Toast,TextInput, Item, Input, Icon, Label, Container, Header, Content} from 'native-base'
 class LoginScreen extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      email: '',
-      senha: ''
+      username: '',
+      password: '',
     }
   }
-  placeEmailHandler = val => {
+  componentWillReceiveProps(nextProps) {
+    console.log('componeteWill', nextProps)
+    if (nextProps.userIsLoggedIn) {
+      this.props.navigation.navigate('MainContent');
+    }
+  }
+
+  placeUsernameHandler = val => {
     this.setState({
-      email: val
+      username: val
     })
   };
-  placeSenhaHandler = val => {
+  placePasswordHandler = val => {
     this.setState({
-      senha: val
+      password: val
     })
   };
 
    signIn = () => {
-     console.log(props)
-    // this.props.onSignIn(props.email, props.senha)
+     this.props.onSignIn(this.state.username, this.state.password)
    }
 
   render() {
@@ -40,60 +47,41 @@ class LoginScreen extends Component {
              placeholder="Email"
              autoCapitalize='none'
              autoCorrect={false}
-
-             value={this.state.email}
-             onChange={(event) => this.placeEmailHandler(event.nativeEvent.text)}
-             keyboardType={"email-address"}/> 
+             autoFocus={true}
+             keyboardType='email-address'
+             value={this.state.username}
+             onChange={(event) => this.placeUsernameHandler(event.nativeEvent.text)} /> 
             </Item>
+
             <Item >
              <Icon active name="md-key"/>
-             <Input secureTextEntry={true} placeholder="Senha" value={this.state.senha}
-             onChange={(event) => this.placeSenhaHandler(event.nativeEvent.text)}
+             <Input
+              placeholder="Senha"
+              autoCapitalize='none'
+              autoCorrect = {false}
+              secureTextEntry={true} 
+              value={this.state.password}
+              onChange={(event) => this.placePasswordHandler(event.nativeEvent.text)}
              /> 
             </Item>
             <Button full style={styles.button}
-            > 
+             onPress={(e) => this.signIn(e)}> 
               <Text>ENTRAR</Text>
             </Button>
           </Form>
         </Content>
       </Container>
-
-
-
-  // <View style={styles.container}>
-  //         <Form>
-  //           <Text style={styles.text} >Olá! Para continuar,digite o seu email</Text>
-  //           <Item>
-  //             <Input 
-  //             placeholder='Email'
-  //             keyboardType = {'email-address'}
-  //             style={{width: 300, borderColor: "white", borderWidth: 1, backgroundColor: 'white'}}
-  //             value={this.state.email}
-  //             onChange={(event) => this.emailChangeHandler(event.nativeEvent.text)}
-  //             />
-  //          </Item>
-  //             <Button style={styles.button} full onPress={() => Toast.show({
-  //               text: 'Login Realizado',
-  //               buttonText: 'Esse'
-  //             })}>
-  //             <Text style = {{fontSize: 17}}>Continuar</Text>
-  //             </Button>
-  //           </Form>
-  //       </View>
       );
     }
   }
-  const mapStateToProps = state => {
-    return { };
+  const mapStateToProps = (state, ownProps) => {
+    return { 
+      userIsLoggedIn: state.authenticate.isLoggedIn
+    };
   };
   const mapDispatchToProps = dispatch => {
     return {
-      onSignIn: (email, senha) => dispatch(LOG_IN(email, senha))
-
-      // onIncrement: () => dispatch(increment()),
-      // onDecrement: () => dispatch(decrement()),
-      // onNavigateToMainScreen: () => dispatch(navigateToMainScreen())
+      onSignIn: (username, password) => dispatch(logIn(username, password))
     };
   };
 

@@ -15,13 +15,13 @@ class MainScreen extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.userStatus === "isLoggedOut") {
+    if (!nextProps.isLoggedIn) {
       this.props.navigation.navigate("InitialContent");
     }
   }
 
   auth = () => {
-    if (this.props.userStatus === "isLoggedOut") {
+    if (!this.props.isLoggedIn) {
       this.props.navigation.navigate("InitialContent");
     }
   };
@@ -32,21 +32,11 @@ class MainScreen extends Component {
       <MainContent />
     );
   }
-  // static navigationOptions = ({ navigation }) => {
-  //   const params = navigation.state.params || {};
-
-  //   return {
-  //     headerTitle: "<LogoTitle />",
-  //     headerLeft: (
-  //       <Button onPress={() => alert("sgsrgs")} title="+1csds" color="#fff" />
-  //     ),
-  //   };
-  // };
 }
 
 const mapStateToProps = state => {
   return {
-    userStatus: state.authenticate.userStatus,
+    isLoggedIn: state.authenticate.isLoggedIn,
     screenTitle: state.navigateTo.title
   };
 };

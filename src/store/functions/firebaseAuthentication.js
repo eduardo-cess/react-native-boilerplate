@@ -2,9 +2,9 @@ import {auth} from '../../config/firebase'
 
 export const getUserAuthentication = async (user) => {
   var response 
-  await auth.signInWithEmailAndPassword(user.email, user.password). then(
+  await auth.signInWithEmailAndPassword(user.username, user.password). then(
     user => {
-      response =  user.id
+      response = user.uid
     }
   ).catch( error => {
     response = error
@@ -12,8 +12,22 @@ export const getUserAuthentication = async (user) => {
   return response
 }
 
-// export const getAllProdutosFirebase = async () => {
-//   let produtosQuery = await produtosRef.get()
-//   let produtos = firebaseDataToArray(produtosQuery)
-//   return produtos
-// }
+export const signUpUser = async (user) => {
+  var response
+
+  await auth.createUserWithEmailAndPassword(user.username, user.password).then(
+    user => {
+      response = user.uid
+    }
+  ).catch(error => {
+    response = error
+  })
+  return response
+}
+
+
+export const logOut = async (user) => {
+  var response 
+
+  await auth.signOut();
+}

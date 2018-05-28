@@ -4,10 +4,11 @@ import {getUserAuthentication} from '../functions/firebaseAuthentication'
 
 export const logIn = (username, password) => {
     return async dispatch => {
-        let user = await getUserAuthentication({username, password})
+        let response = await getUserAuthentication({username, password})
         dispatch({
             type: LOG_IN,
-            
+            userId: response,
+            userStatus: 'isLogged'
         })
     }
 }
@@ -15,5 +16,12 @@ export const logIn = (username, password) => {
 export const logOut = () => {
     return {
         type: LOG_OUT
+    }
+}
+
+export const singUp = (name, username, password) => {
+    return {
+        type: SIGN_UP,
+        name: name,
     }
 }

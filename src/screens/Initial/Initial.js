@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { View , StyleSheet, Image} from "react-native";
-import {Container, Button, Text, Spinner, Footer } from "native-base";
+import {Container, Button, Text, Spinner, Footer, Content } from "native-base";
 import { InitialContent } from "../../config/routes"
 import { SecundaryColor} from "../../theme/variables/commonColor"
 class InitialScreen extends Component {
@@ -13,36 +13,31 @@ class InitialScreen extends Component {
   render() {
     return (
       <Container>
-        <View style={styles.container}>
-          <Image 
-            style={styles.image} 
-            source={require("../../static/img/icone.png")}/>
-          <View>
-            <Text style={{fontSize:12, marginBottom: 50}}>Agricultura familiar para todos.</Text>
+        <Content style={{margin: 30}}>
+          <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}} >
+            <Image 
+              style={styles.image} 
+              source={require("../../static/img/icone.png")}/>
+            <Text style={{fontSize:19, marginBottom: 50}}>Agricultura Saudável</Text>
           </View>
-          <View style={styles.components}>
-            <Button onPress={this.signUpScreen} info> 
+          <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}} >
+            <Button  style={{marginBottom: 30}} full onPress={this.signUpScreen} info> 
               <Text>CADASTRAR</Text>
             </Button>
-          </View>
-          <View>
-            <Text style={{fontSize:12, marginBottom:5}}>Você já possui uma conta?</Text>
-          </View>
-          <View full bordered>
-            <Button onPress= {this.signInScreen}> 
+            <Text style={{fontSize:15, marginBottom:5}}>Você já possui uma conta?</Text>
+            <Button full onPress= {this.signInScreen}> 
               <Text>ENTRAR</Text>
             </Button>
           </View>
-        </View>
-        <View style={styles.footer}>
-          <Footer>
-          <Text style={styles.footerText}>
-            {`Usando o nosso app você concorda com os 
-              Termos de Uso
-            `} 
-          </Text>
+          </Content>
+          <Footer style={{flexDirection: 'column',justifyContent: 'center', alignItems:'center'}} >
+            <Text style={{fontSize: 15}}>
+              Usando o nosso app você concorda com os 
+            </Text>
+            <Text style={{fontSize: 15}}>
+              Termos de Uso 
+            </Text>
           </Footer>
-        </View>
       </Container>
     )
   }
@@ -64,8 +59,13 @@ const styles = StyleSheet.create({
     color: 'white'
   },
   image: {
-    height: 150, 
-    width: 150,
-    borderRadius: 90, 
-  }
+    height: 200, 
+    width: 200,
+    borderRadius: 110, 
+
+  },
+    button: {
+      marginTop: 30,
+      borderRadius: 5,
+    }
 });

@@ -19,8 +19,8 @@ import MinhaContaScreen from '../screens/Main/MinhaConta'
 import CadastroScreen from '../screens/Initial/Cadastro'
 import EsqueceuSenhaScreen from '../screens/Initial/EsqueceuSenha'
 import InitialScreen from '../screens/Initial/Initial'
-import LoginScreen from '../screens/Initial/LoginScreen'
-import SplashScreen from '../screens/Initial/SplashScreen' 
+import LoginScreen from '../screens/Initial/Login'
+import SplashScreen from '../screens/Initial/Splash' 
 
 import { primaryColor } from '../theme/variables/commonColor';
 

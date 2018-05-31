@@ -3,6 +3,7 @@ import {getUserAuthentication, signUpUser, recoverPassword} from '../functions/f
 import {insertUserNameAndPerfil} from '../functions/user';
 
 export const logIn = (username, password) => {
+    console.log(username)
     return async dispatch => {
         let response = await getUserAuthentication({username, password})
         dispatch({

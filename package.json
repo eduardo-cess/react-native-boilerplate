@@ -10,6 +10,7 @@
     "color": "~0.11.1",
     "eslint": "^4.19.1",
     "firebase": "^4.12.1",
+    "formik": "^0.11.11",
     "native-base": "^2.3.10",
     "react": "16.3.1",
     "react-native": "0.55.3",
@@ -19,7 +20,8 @@
     "react-navigation": "^1.5.11",
     "react-redux": "^5.0.7",
     "redux": "^4.0.0",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "yup": "^0.25.1"
   },
   "devDependencies": {
     "babel-jest": "22.4.3",

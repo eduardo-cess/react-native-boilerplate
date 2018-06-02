@@ -3,24 +3,34 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import {StyleSheet, BackHandler} from "react-native";
 import { increment, decrement, navigateToMainScreen } from "../../store/actions";
-import { Container, Content, Item, Icon, Input, Form, Button, Text } from "native-base";
+import { Container, Content, Item, Icon, Input, Form, Button, Text, View } from "native-base";
 import { resetPassword } from "../../store/actions";
 import AppHeader from "../../components/header";
+import * as Yup from 'yup'
+import { withFormik } from "formik";
+
 
 class EsqueceuSenhaScreen extends Component {
-  constructor(props){
+  constructor(props) {
     super(props)
     this.state = {
-      email: ''
+      error: ''
     }
   }
 
-  sendEmailRecuperarSenha = () => {
-    this.props.onSendEmailRecuperarSenha(this.state.email)
+  componentWillReceiveProps(props) {
+    console.log(props.error)
+    if (props.error != '') {
+      this.state.error = props.error
+    }
   }
 
+  sendEmailRecuperarSenha = (email) => {
+    this.props.onSendEmailRecuperarSenha(email)
+  }
+  
   goBack = () => this.props.navigation.goBack(null);
-
+  
   render() {
     BackHandler.addEventListener('hardwareBackPress', () => {
       return this.goBack();
@@ -29,23 +39,8 @@ class EsqueceuSenhaScreen extends Component {
       <Container>
         <AppHeader title="Recuperar Senha" leftButtonPress = {this.goBack}/>
         <Content style={{margin:20}}>
-          <Form>
-            <Item>
-              <Icon active name="md-mail"/>
-                <Input 
-                placeholder="Email"
-                autoCapitalize='none'
-                autoCorrect={false}
-                autoFocus={true}
-                keyboardType='email-address'
-                value={this.state.email}
-                onChange={(event) => this.placeUsernameHandler(event.nativeEvent.text)} />
-            </Item>
-            <Button full style={styles.button}
-             onPress={(e) => this.sendEmailRecuperarSenha()}> 
-              <Text style={{color:'white'}} >RECUPERAR</Text>
-            </Button>
-          </Form>
+         <TagFormResetSenha sendEmailRecuperarSenha = {this.sendEmailRecuperarSenha}/>
+         {this.state.error != '' && <Text style={{color: 'red' , marginTop: 15}}>{this.state.error}</Text> }
         </Content>
       </Container>
     );
@@ -53,12 +48,12 @@ class EsqueceuSenhaScreen extends Component {
 }
 const mapStateToProps = state => {
   return {
-    
+    error: state.authenticate.error
   };
 };
 const mapDispatchToProps = dispatch => {
   return {
-    onSendEmailRecuperarSenha : (email) => dispatch(resetPassword(email))
+    onSendEmailRecuperarSenha : (email) => dispatch(resetPassword(email)),
   };
 };
 
@@ -70,3 +65,44 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   }
 });
+
+
+const formResetSenha = props => {
+  return(
+    <Form>
+      <Item>
+        <Icon active name="md-mail"/>
+          <Input 
+          placeholder="Email"
+          autoCapitalize='none'
+          autoCorrect={false}
+          autoFocus={true}
+          keyboardType='email-address'
+          value={props.values.email}
+          onChangeText={text => props.setFieldValue('email', text)} />
+          {props.errors.email && <Icon  style={{color: 'red'}}name='md-alert'/> }
+      </Item>
+      <View style={{flex: 1,flexDirection: 'column',justifyContent: 'center',alignItems: 'center', marginTop: 20}}>
+        {props.errors.email && <Text style={{color: 'red'}}>{props.errors.email}</Text> }
+      </View>
+      <Button full style={styles.button}
+      onPress={props.handleSubmit}> 
+        <Text style={{color:'white'}} >RECUPERAR</Text>
+      </Button>
+    </Form>
+  );
+}
+
+const atach = withFormik({
+  mapPropsToValues: () => ({email: ''}),
+  validationSchema: Yup.object().shape({
+    email: Yup.string()
+    .email('Digite um e-mail válido')
+    .required('Preencha o campo de e-mail')
+  }),
+  handleSubmit: (values, actions) => {
+    actions.props.sendEmailRecuperarSenha(values.email);
+  }
+});
+
+const TagFormResetSenha = atach(formResetSenha)

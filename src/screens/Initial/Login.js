@@ -39,7 +39,7 @@ class Login extends Component {
     });
     return (
       <Container>
-        <AppHeader title = 'Login' leftButtonPress = {this.goBack}/>
+        <AppHeader title = 'Login' leftButtonPress = {this.goBack} search = {false}/>
         <Content style={{margin: 20 ,marginTop: 120}}>
             <TagFormLogin signIn = {this.signIn}/>
             <View style = {{flex:1, justifyContent: 'center', alignItems: 'flex-end', flexDirection: 'row' }}>

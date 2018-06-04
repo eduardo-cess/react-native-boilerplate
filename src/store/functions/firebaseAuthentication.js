@@ -2,11 +2,11 @@ import {auth} from '../../config/firebase'
 
 export const getUserAuthentication = async (email, password) => {
   var response = {}
-  console.log(email + password)
   await auth.signInWithEmailAndPassword(email, password). then(
     user => {
       response.sucess = true
       response.uid = user.uid
+      console.log(response.error)
     }
   ).catch( error => {
     let messageError 
@@ -28,7 +28,6 @@ export const getUserAuthentication = async (email, password) => {
     response.sucess = false
     response.error = messageError
   })
-  console.log(response.error)
   return response
 }
 

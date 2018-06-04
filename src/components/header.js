@@ -14,11 +14,13 @@ class AppHeader extends Component {
         <Body>
           <Title>{this.props.title}</Title>
         </Body>
+        {this.props.search && 
         <Right>
           <Button transparent>
             <Icon name="search" />
           </Button>
         </Right>
+        }
       </Header>
     );
   }

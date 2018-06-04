@@ -9,13 +9,28 @@ import { withFormik } from 'formik'
 import * as Yup from 'yup'
 
 class Cadastro extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      error: '',
+      showToast: false
+    }
+  }
 
-  validatePassword(e){
-    if( this.state.password === this.state.confirmPassword){
-      this.props.onSignUp(this.state.fullName, this.state.email, this.state.password)
+  componentWillReceiveProps(props) {
+    if (props.error != '') {
+      this.state.error = props.error
+    }
+  }
+
+  validatePassword = (fullName, email, password, confirmPassword) => {
+    if(password === confirmPassword){
+      this.props.onSignUp(fullName, email, password)
     }
     else {
-      console.log("As senhas não coincidem")
+      this.setState({
+        error: 'As senhas não coincidem'
+      })
     }
   }
 
@@ -29,7 +44,7 @@ class Cadastro extends Component {
       <Container >
         <AppHeader title='Cadastro' leftButtonPress = {this.goBack}/>
         <Content style={{margin: 20}}>
-          <TagFormCadastro/>
+          <TagFormCadastro validatePassword = {this.validatePassword}/>
           <TouchableWithoutFeedback onPress={ () => this.props.navigation.navigate('LoginScreen')}>
               <View>
                 <Text style={{fontSize:18, color: 'blue', marginLeft: 200, marginTop:10}} >
@@ -37,6 +52,9 @@ class Cadastro extends Component {
                 </Text>
               </View>
             </TouchableWithoutFeedback>
+            <View style={{flex: 1,flexDirection: 'column',justifyContent: 'center',alignItems: 'center', marginTop: 15}}>
+              {this.state.error != '' && <Text style={{color: 'red'}}>{this.state.error}</Text> }
+            </View>
         </Content>
       </Container>
     );
@@ -44,6 +62,7 @@ class Cadastro extends Component {
 }
 const mapStateToProps = state => {
   return {
+    error: state.authenticate.error
   };
 };
 const mapDispatchToProps = dispatch => {
@@ -84,12 +103,11 @@ const formCadastro = props => {
         autoCapitalize='words'
         autoCorrect={false}
         autoFocus={true}
-        onBlur={setFieldTouched}
         keyboardType='default'
         value={props.values.fullName}
         onChangeText={text => props.setFieldValue('fullName', text)} 
         /> 
-        {props.errors.fullName && touched.fullName &&  <Icon  style={{color: 'red'}}name='md-alert'/> } 
+        {props.errors.fullName &&  <Icon  style={{color: 'red'}}name='md-alert'/> } 
       </Item>
       <Item style={{marginBottom: 20}} >
         <Icon active name="md-mail"/>
@@ -128,15 +146,16 @@ const formCadastro = props => {
         {props.errors.confirmPassword && <Icon  style={{color: 'red'}}name='md-alert'/> }
       </Item>
       <Button full style={styles.button}
-        onPress={(e) => this.validatePassword(e)}> 
+        onPress={props.handleSubmit}> 
         <Text style={{color:'white'}} >CADASTRAR</Text>
       </Button>
     </Form>
   );
 }
 
-const atach= withFormik({
-  mapPropsToValues: () => ({fullName:'', email: '', password: '', confirmPassword: ''}),
+const atach 
+= withFormik({
+  mapPropsToValues: () => ({fullName:'Armando Almeida', email: 'teste@teste.comm', password: '123456487', confirmPassword: '1234564871'}),
   validationSchema: Yup.object().shape({
     fullName: Yup.string()
       .min(6, 'O nome deve conter no mínimo 6 caracteres')
@@ -149,11 +168,10 @@ const atach= withFormik({
       .required('Preencha o campo de senha'),
     confirmPassword: Yup.string()
       .min(6, 'A senha deve conter no mínimo 6 caracteres')
-      .required('Preencha o campo de senha'),
+      .required('Preencha o campo de senha')
   }),
-  handleSubmit: (values, {props, setSubmitting}) => {
-    props.signIn(values.email, values.password)
-    setSubmitting: false
+  handleSubmit: (values, actions) => {
+    actions.props.validatePassword(values.fullName, values.email, values.password, values.confirmPassword)
   }
 })
 

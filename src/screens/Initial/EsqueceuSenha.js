@@ -19,7 +19,6 @@ class EsqueceuSenhaScreen extends Component {
   }
 
   componentWillReceiveProps(props) {
-    console.log(props.error)
     if (props.error != '') {
       this.state.error = props.error
     }
@@ -40,7 +39,9 @@ class EsqueceuSenhaScreen extends Component {
         <AppHeader title="Recuperar Senha" leftButtonPress = {this.goBack}/>
         <Content style={{margin:20}}>
          <TagFormResetSenha sendEmailRecuperarSenha = {this.sendEmailRecuperarSenha}/>
-         {this.state.error != '' && <Text style={{color: 'red' , marginTop: 15}}>{this.state.error}</Text> }
+         <View style={{flex: 1,flexDirection: 'column',justifyContent: 'center',alignItems: 'center', marginTop: 15}}>
+              {this.state.error != '' && <Text style={{color: 'red'}}>{this.state.error}</Text> }
+            </View>
         </Content>
       </Container>
     );

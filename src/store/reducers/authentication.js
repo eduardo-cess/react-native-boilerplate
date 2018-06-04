@@ -3,7 +3,8 @@ import { LOG_IN, LOG_OUT, RECOVER_PASSWORD, SIGN_UP } from "../actions/actionTyp
 const initialState = {
   userId: null,
   isLoggedIn: false,
-  error: ''
+  error: '',
+  userCreatedWithSucess: ''
 };
 
 export default function authenticate(state = initialState, action = {}) {
@@ -29,7 +30,8 @@ export default function authenticate(state = initialState, action = {}) {
     case SIGN_UP:
       return {
         ...state,
-        error: action.error
+        error: action.error,
+        userCreatedWithSucess: action.sucess
       }
       break;
     default:

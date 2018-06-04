@@ -11,18 +11,17 @@ import * as Yup from 'yup'
 
 class Login extends Component {
   constructor(props){
-  super(props)
-  this.state = {
-    error: ''
+    super(props)
+    this.state = {
+      error: ''
+    }
   }
-}
   componentWillReceiveProps(nextProps) {
     if (nextProps.usesettingsrIsLoggedIn) {
       this.props.navigation.navigate('MainContent');
     }
     if (nextProps.error != '') {
-      this.state.error = nextProps.error.error
-    }
+      this.state.error = nextProps.error}
   }
 
   signIn = (email, password) => {
@@ -53,7 +52,9 @@ class Login extends Component {
                 </Text>
               </TouchableWithoutFeedback>
             </View>
-            {this.state.error != '' && <Text style={{color: 'red' , marginTop: 15}}>{this.state.error}</Text> }
+            <View style = {{flex:1, justifyContent: 'center', alignItems: 'flex-end', flexDirection: 'row'}}>
+              {this.state.error != '' && <Text style={{color: 'red' , marginTop: 15}}>{this.state.error}</Text>}
+            </View>
         </Content>
       </Container>
     );
@@ -109,7 +110,7 @@ const loginForm = props => {
       </View>
       <Button full style={styles.button}
         onPress={props.handleSubmit}
-        on> 
+        > 
         <Text>ENTRAR</Text>
       </Button>
     </Form>

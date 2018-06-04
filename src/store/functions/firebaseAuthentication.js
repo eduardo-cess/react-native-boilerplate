@@ -36,12 +36,27 @@ export const signUpUser = async (email, password) => {
   var response = {}
   await auth.createUserWithEmailAndPassword(email, password).then(
     user => {
-      response.sucess = true
+      response.sucess = true    
       response.uid = user.uid
     }
   ).catch(error => {
-    console.log(error)
-    response = error
+    let messageError
+    switch (error) {
+      case 'email-already-in-use':
+        messageError = 'Este email já está em uso'
+        break;
+      case 'invalid-email':
+        messageError = 'Email inválido'
+        break;
+      case 'weak-password':
+        messageError = 'Senha fraca, por favor a senha deve ter mais de 6 dígitos'
+        break;
+      default:
+        messageError = 'Houve um problema, por favor tente mais tarde'
+        break;
+    }
+    response.sucess = false
+    response.error = messageError
   })
   return response
 }

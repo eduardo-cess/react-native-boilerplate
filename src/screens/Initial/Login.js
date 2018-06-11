@@ -39,7 +39,6 @@ class Login extends Component {
     });
     return (
       <Container>
-        <AppHeader title = 'Login' leftButtonPress = {this.goBack} search = {false}/>
         <Content style={{margin: 20 ,marginTop: 120}}>
             <TagFormLogin signIn = {this.signIn}/>
             <View style = {{flex:1, justifyContent: 'center', alignItems: 'flex-end', flexDirection: 'row' }}>
@@ -99,7 +98,7 @@ const loginForm = props => {
         autoCapitalize='none'
         autoCorrect = {false}
         secureTextEntry={true} 
-        value={props.values.password}
+        value={props.values.password}false
         onChangeText={text => props.setFieldValue('password', text)
         }/>
         { props.errors.password &&  <Icon  style={{color: 'red'}}name='md-alert'/> } 

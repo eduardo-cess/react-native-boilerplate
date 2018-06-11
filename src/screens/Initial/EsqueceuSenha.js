@@ -36,7 +36,6 @@ class EsqueceuSenhaScreen extends Component {
     });
     return (
       <Container>
-        <AppHeader title="Recuperar Senha" leftButtonPress = {this.goBack} search = {false}/>
         <Content style={{margin:20}}>
          <TagFormResetSenha sendEmailRecuperarSenha = {this.sendEmailRecuperarSenha}/>
          <View style={{flex: 1,flexDirection: 'column',justifyContent: 'center',alignItems: 'center', marginTop: 15}}>

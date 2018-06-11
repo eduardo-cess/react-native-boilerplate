@@ -10,6 +10,11 @@ class InitialScreen extends Component {
   signInScreen = () => {
     this.props.navigation.navigate("LoginScreen");
   }
+
+  static navigationOptions = {
+    header: null
+  }
+
   render() {
     return (
       <Container>

@@ -118,14 +118,42 @@ export const MainContent = StackNavigator(
 
 export const InitialContent = StackNavigator(
   {
-    InitialScreen: { screen: InitialScreen },
-    LoginScreen: { screen: LoginScreen },
+    InitialScreen: {
+      screen: InitialScreen
+    },
+    LoginScreen: { 
+      screen: LoginScreen,
+      navigationOptions: {
+        headerTitle: 'Login',
+      }
+    },
     SplashScreen: { screen: SplashScreen},
-    CadastroScreen: { screen: CadastroScreen },
-    EsqueceuSenhaScreen: { screen: EsqueceuSenhaScreen },
+    CadastroScreen: { 
+      screen: CadastroScreen,
+      navigationOptions: {
+        headerTitle: 'Cadastro',
+      }
+    },
+    EsqueceuSenhaScreen: { 
+      screen: EsqueceuSenhaScreen,
+      navigationOptions: {
+        headerTitle: 'Recuperar Senha',
+      }
+    },
   },
   {
-    headerMode: "none"
+    headerMode: "float",
+    headerTransitionPreset: "uikit",
+    navigationOptions: {
+      headerTitleStyle: {
+        color: '#FFF'
+      },
+      headerStyle: {
+        backgroundColor: primaryColor
+      },
+      headerBackTitle: null,
+      headerTintColor: '#FFF',
+    }
   }
 );
 

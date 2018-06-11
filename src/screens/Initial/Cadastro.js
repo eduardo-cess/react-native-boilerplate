@@ -42,7 +42,6 @@ class Cadastro extends Component {
     });
     return (
       <Container >
-        <AppHeader title='Cadastro' leftButtonPress = {this.goBack} search = {false}/>
         <Content style={{margin: 20}}>
           <TagFormCadastro validatePassword = {this.validatePassword}/>
           <TouchableWithoutFeedback onPress={ () => this.props.navigation.navigate('LoginScreen')}>

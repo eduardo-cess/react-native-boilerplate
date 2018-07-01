@@ -53,7 +53,7 @@ class ProdutoScreen extends Component {
                 <Text > por {produto.tipo.toUpperCase()}</Text>
               </View>
             </View>
-            <Form>
+            {/* <Form>
               <View style={styles.qtdView}>
                 <Text style={{ fontSize: 17 }}>Quantidade: </Text>
                 <Picker
@@ -83,7 +83,7 @@ class ProdutoScreen extends Component {
               })}>
                 <Text>Adicionar ao carrinho</Text>
               </Button>
-            </Form>
+            </Form> */}
             <View style={{ marginTop: 10 }}>
               <Text style={styles.subTitle}>Informações sobre Vendedor :</Text>
               <List  >
@@ -92,7 +92,7 @@ class ProdutoScreen extends Component {
                     <Icon name="person" style={styles.icon} />
                   </Left>
                   <Body >
-                    <Text style={styles.fontInfo}>{produto.produtor}</Text>
+                    <Text style={styles.fontInfo}>{produto.produtor.nome}</Text>
                   </Body>
                 </ListItem>
                 <ListItem avatar>

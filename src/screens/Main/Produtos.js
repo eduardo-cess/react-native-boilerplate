@@ -78,10 +78,10 @@ class Produtos extends Component {
                   </Left>
                   <Body >
                     <Text >{produto.nome}</Text>
-                    <Text note>de {produto.produtor}</Text>
+                    <Text note>de {produto.produtor.nome}</Text>
                   </Body>
                   <Right>
-                    <Text style={styles.money}>R${produto.preco.toFixed(2)}</Text>
+                    <Text style={styles.money}>R${produto.preco}</Text>
                     <Text note>por {produto.tipo.toUpperCase()}</Text>
                   </Right>
                 </ListItem>

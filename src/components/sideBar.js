@@ -30,15 +30,15 @@ class SideBar extends Component {
         <TouchableOpacity 
         style={{ height: 123, width: null, flex: 1, backgroundColor: primaryColor, flexDirection: 'row', justifyContent: 'space-evenly', }}
         onPress={this.props.goToMinhaContaScreen}>
-          <View style={{ alignItems: "center", justifyContent: 'center' }}>
+          {/* <View style={{ alignItems: "center", justifyContent: 'center' }}>
             <Thumbnail
               source={ (user.imagem != "-") ? {'uri': user.imagem} : require('../static/img/user-256.png') }
               style={{ height: 65, width: 65, }}
             />
-          </View>
+          </View> */}
           <View style={{ justifyContent: 'center' }}>
-            <Text style={{ color: "white", fontSize: 23, fontFamily: 'sans-serif' }}>Olá, {user.nome}!</Text>
-            <Text style={{ color: "white", fontSize: 15 }}>{user.email}</Text>
+            <Text style={{ color: "white", fontSize: 23, fontFamily: 'sans-serif' }}>Bem Vindo!</Text>
+            {/* <Text style={{ color: "white", fontSize: 15 }}>{user.email}</Text> */}
           </View>
         </TouchableOpacity>
         <List >

@@ -15,6 +15,7 @@ import ProdutosScreen from '../screens/Main/Produtos'
 import ProdutorScreen from '../screens/Main/Produtor'
 import ProdutoresScreen from '../screens/Main/Produtores'
 import MinhaContaScreen from '../screens/Main/MinhaConta'
+import ProdutosFeiraScreen from '../screens/Main/ProdutosFeira';
 
 import CadastroScreen from '../screens/Initial/Cadastro'
 import EsqueceuSenhaScreen from '../screens/Initial/EsqueceuSenha'
@@ -74,8 +75,14 @@ export const MainContent = StackNavigator(
     MainTabs: {
       screen: MainTabsScreen,
     },
+    FeirasScreen: {
+      screen: FeirasScreen,
+      navigationOptions: {
+        headerTitle: 'Feira',
+      }
+    },
     FeiraScreen: {
-      screen: FeiraContent,
+      screen: FeiraScreen,
       navigationOptions: {
         headerTitle: 'Feira',
       }
@@ -84,6 +91,18 @@ export const MainContent = StackNavigator(
       screen: ProdutoScreen,
       navigationOptions: {
         headerTitle: 'Produto',
+      }
+    },
+    ProdutosScreen: {
+      screen: ProdutosScreen,
+      navigationOptions: {
+        headerTitle: 'Produtos',
+      }
+    },
+    ProdutosFeiraScreen: {
+      screen: ProdutosFeiraScreen,
+      navigationOptions: {
+        headerTitle: 'Produtos da Feira',
       }
     },
     ProdutorScreen: {

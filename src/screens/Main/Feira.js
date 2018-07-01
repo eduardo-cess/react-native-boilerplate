@@ -21,6 +21,7 @@ import ImageSlider from 'react-native-image-slider';
 import FeiraInfoTab from "./FeiraInfoTab";
 import Produtores from "./Produtores";
 import Produtos from "./Produtos";
+import ProdutosFeiraScreen from './ProdutosFeira';
 
 
 class FeiraScreen extends Component {
@@ -47,7 +48,7 @@ class FeiraScreen extends Component {
         parallaxHeaderHeight={200}
         renderForeground={() => (
           <ImageSlider
-            images={this.state.images}
+            images={this.props.currentFeira.imagens}
             autoPlayWithInterval={5000}
           />
         )}>
@@ -56,7 +57,7 @@ class FeiraScreen extends Component {
             <FeiraInfoTab />
           </Tab>
           <Tab heading="PRODUTOS" >
-            <Produtos goToPage={() => this.props.navigation} />
+            <ProdutosFeiraScreen goToPage={() => this.props.navigation} />
           </Tab>
         </Tabs>
       </ParallaxScrollView>
@@ -67,6 +68,7 @@ class FeiraScreen extends Component {
 const mapStateToProps = state => {
   return {
     // valor: state.counter.valor
+    currentFeira: state.feiras.currentFeira
   };
 };
 const mapDispatchToProps = dispatch => {

@@ -1,8 +1,7 @@
 import React, { Component } from "react";
-import { View, BackHandler, Image, StyleSheet } from 'react-native'
+import { View, BackHandler, Image, StyleSheet, TouchableOpacity } from 'react-native'
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-// import { increment, decrement, navigateToMainScreen } from "../../store/actions";
 import {
   Content,
   Text,
@@ -17,37 +16,47 @@ import {
   Thumbnail
 } from 'native-base';
 import { primaryColor } from '../../theme/variables/commonColor';
+import openMap from 'react-native-open-maps';
 
 class FeiraInfoTabScreen extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      infos: [
-        { "id": 2, "type": "time", "information": "Seg. a Sex. de 05:00hs até 16:00hs", "icon": "time" },
-        { "id": 1, "type": "address", "information": "Cidade Z, Rua X, Entre Rua Y e Rua Z. Bairro X, CEP: 66666-666", "icon": "pin" },
-        { "id": 3, "type": "extraInfo", "information": "Outras informações e curiosidades... A feira foi inaugurada dia 12/03/1990. É famosa por seus tomates de boa qualidade, etc...", "icon": "information-circle" },
-      ]
     }
   }
+
+  goToFeira = () => {
+    openMap(this.props.currentFeira.localizacao);
+  }
   render() {
+      let {currentFeira} = this.props
     return (
       <Container>
         <Content>
           <List  >
-            {
-              this.state.infos.map(info => {
-                return (
-                  <ListItem avatar key={info.id}>
-                    <Left>
-                      <Icon name={info.icon} style={styles.icon} />
-                    </Left>
-                    <Body >
-                      <Text style={styles.font}>{info.information}</Text>
-                    </Body>
-                  </ListItem>
-                )
-              })
-            }
+            <ListItem >
+                <Icon name='pin' style={styles.icon} />
+                <Body>
+                    <Text style={styles.font}>Rua: {currentFeira.endereco.rua}</Text>
+                    <Text style={styles.font}>Bairro: {currentFeira.endereco.bairro}</Text>
+                    <Text style={styles.font}>Complemento: {currentFeira.endereco.complemento}</Text>
+                    <TouchableOpacity onPress={()=>this.goToFeira()}>
+                        <Text style={{color: 'blue'}}>Veja no Mapa</Text>
+                    </TouchableOpacity>
+                </Body>
+            </ListItem>  
+            <ListItem >
+                <Icon name='time' style={styles.icon} />
+                <Body >
+                    <Text style={styles.font}>{currentFeira.horario}</Text>
+                </Body>
+            </ListItem>  
+            <ListItem >
+                <Icon name='information-circle' style={styles.icon} />
+                <Body >
+                    <Text style={styles.font}>{currentFeira.info}</Text>
+                </Body>
+            </ListItem>  
           </List>
         </Content>
       </Container>
@@ -61,13 +70,14 @@ const styles = StyleSheet.create({
     color: "#343a36"
   },
   icon: {
-    color: primaryColor
+    color: primaryColor,
+    marginRight: 20,
   }
 });
 
 const mapStateToProps = state => {
   return {
-    // valor: state.counter.valor
+    currentFeira: state.feiras.currentFeira
   };
 };
 const mapDispatchToProps = dispatch => {

@@ -7,3 +7,8 @@ export const LOG_OUT = 'LOG_OUT'
 export const GET_ALL_PRODUTOS = 'GET_ALL_PRODUTOS'
 
 export const SEARCH = 'SEARCH'
+
+export const GET_ALL_FEIRAS = 'GET_ALL_FEIRAS'
+export const UPDATE_FEIRA = 'UPDATE_FEIRA'
+export const SET_CURRENT_FEIRA = 'SET_CURRENT_FEIRA'
+

@@ -31,6 +31,12 @@ class ProdutoScreen extends Component {
       selected2: value
     });
   }
+
+  formatPreco = (preco) => {
+    let formatedPreco = preco.replace(',','.')
+    return parseFloat(formatedPreco).toFixed(2)
+  }
+
   render() {
     const { params } = this.props.navigation.state;
     const produto = params.produto
@@ -39,7 +45,7 @@ class ProdutoScreen extends Component {
       <Container>
         <Content style={{ backgroundColor: "white" }}>
           <Image
-            source={ (produto.imagem != null) ? {'uri': produto.imagem} : require('../../static/img/missing-image-640x360.png') }
+            source={ (produto.imagem != '-') ? {'uri': produto.imagem} : require('../../static/img/missing-image-640x360.png') }
             style={{ height: 200, width: null, flex: 1 }}
           />
 
@@ -48,7 +54,7 @@ class ProdutoScreen extends Component {
               <Text style={styles.title}>{produto.nome}</Text>
             </View>
             <View style={styles.priceView}>
-              <Text style={styles.price}>R${produto.preco.toFixed(2)}</Text>
+              <Text style={styles.price}>R${this.formatPreco(produto.preco)}</Text>
               <View style={{ justifyContent: "flex-end" }}>
                 <Text > por {produto.tipo.toUpperCase()}</Text>
               </View>

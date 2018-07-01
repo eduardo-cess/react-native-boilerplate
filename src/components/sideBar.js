@@ -42,14 +42,14 @@ class SideBar extends Component {
           </View>
         </TouchableOpacity>
         <List >
-          <ListItem icon onPress={this.props.goToMinhaContaScreen}>
+          {/* <ListItem icon onPress={this.props.goToMinhaContaScreen}>
             <Left>
               <Icon name="person" style={styles.icon} />
             </Left>
             <Body>
               <Text style={styles.menuFont}>Minha conta</Text>
             </Body>
-          </ListItem>
+          </ListItem> */}
           <ListItem icon>
             <Left>
               <Icon name="settings" style={styles.icon} />

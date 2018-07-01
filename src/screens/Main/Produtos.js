@@ -53,6 +53,11 @@ class Produtos extends Component {
     this.props.onGetAllProdutos()
   }
 
+  formatPreco = (preco) => {
+    let formatedPreco = preco.replace(',','.')
+    return parseFloat(formatedPreco).toFixed(2)
+  }
+
   navigate = (produto) => {
     if (this.props.goToPage == null || this.props.goToPage == undefined) {
       console.log(this.props.navigation)
@@ -74,14 +79,14 @@ class Produtos extends Component {
               return (
                 <ListItem avatar key={produto.id} onPress={() => this.navigate(produto)}>
                   <Left>
-                    <Thumbnail source={ (produto.imagem != null) ? {'uri': produto.imagem} : require('../../static/img/missing-image-640x360.png') } />
+                    <Thumbnail source={ (produto.imagem != '-') ? {'uri': produto.imagem} : require('../../static/img/missing-image-640x360.png') } />
                   </Left>
                   <Body >
                     <Text >{produto.nome}</Text>
                     <Text note>de {produto.produtor.nome}</Text>
                   </Body>
                   <Right>
-                    <Text style={styles.money}>R${produto.preco}</Text>
+                    <Text style={styles.money}>R${this.formatPreco(produto.preco)}</Text>
                     <Text note>por {produto.tipo.toUpperCase()}</Text>
                   </Right>
                 </ListItem>

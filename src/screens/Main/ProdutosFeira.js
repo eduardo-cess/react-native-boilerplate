@@ -52,7 +52,7 @@ class ProdutosFeiraScreen extends Component {
   }
 
   navigate = (produto) => {
-    return this.props.navigation.navigate('ProdutoScreen', {produto: produto})
+    return this.props.goToPage().navigate("ProdutoScreen", {produto: produto})
   }
 
   render() {

@@ -8,6 +8,12 @@ export const getAllFeirasFirebase = async () => {
     return feiras
 }
 
+export const getFeiraFirebase = async (id) => {
+    let feiraQuery = await dbRef.doc(id).get()
+    // let feiras = firebaseDataToArray(feirasQuery)
+    return feiraQuery.data()
+}
+
 export const updateFeiraFirebase = (data) => {
     dbRef.doc(data.id).update(data).then(function () {
         console.log("Feira successfully updated!");

@@ -41,7 +41,7 @@ class FeiraInfoTabScreen extends Component {
                     <Text style={styles.font}>Bairro: {currentFeira.endereco.bairro}</Text>
                     <Text style={styles.font}>Complemento: {currentFeira.endereco.complemento}</Text>
                     <TouchableOpacity onPress={()=>this.goToFeira()}>
-                        <Text style={{color: 'blue'}}>Veja no Mapa</Text>
+                        <Text style={{color: 'blue', fontWeight: 'bold',}}>Veja no Mapa</Text>
                     </TouchableOpacity>
                 </Body>
             </ListItem>  

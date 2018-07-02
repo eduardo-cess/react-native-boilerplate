@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, BackHandler, Image, StyleSheet } from 'react-native';
+import { View, BackHandler, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { increment, decrement, navigateToMainScreen } from "../../store/actions";
@@ -18,14 +18,23 @@ import {
   Body
 } from 'native-base';
 import { primaryColor } from '../../theme/variables/commonColor';
+import { getFeiraFirebase } from "../../store/functions/feira";
+import openMap from 'react-native-open-maps';
 
 class ProdutoScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selected2: undefined
+      selected2: undefined,
+      feira: null
     };
   }
+
+  async componentWillMount() {
+    let feira = await this.getFeiraFromProduto()
+    this.setState({feira: feira})
+  }
+
   onValueChange2(value: string) {
     this.setState({
       selected2: value
@@ -37,9 +46,20 @@ class ProdutoScreen extends Component {
     return parseFloat(formatedPreco).toFixed(2)
   }
 
+  getFeiraFromProduto = async () => {
+    const idFeira = Object.keys(this.props.navigation.state.params.produto.feiras)[0]
+    let feira = await getFeiraFirebase(idFeira)
+    return feira
+  }
+
+  goToFeira = () => {
+    openMap(this.state.feira.localizacao);
+  }
+
   render() {
     const { params } = this.props.navigation.state;
     const produto = params.produto
+    let feira = this.state.feira
 
     return (
       <Container>
@@ -59,37 +79,6 @@ class ProdutoScreen extends Component {
                 <Text > por {produto.tipo.toUpperCase()}</Text>
               </View>
             </View>
-            {/* <Form>
-              <View style={styles.qtdView}>
-                <Text style={{ fontSize: 17 }}>Quantidade: </Text>
-                <Picker
-                  mode="dropdown"
-                  style={{ width: undefined, color: primaryColor }}
-                  selectedValue={this.state.selected2}
-                  onValueChange={this.onValueChange2.bind(this)}
-                >
-                  <Picker.Item label="1" value="0" />
-                  <Picker.Item label="2" value="1" />
-                  <Picker.Item label="3" value="2" />
-                  <Picker.Item label="4" value="3" />
-                  <Picker.Item label="5" value="4" />
-                  <Picker.Item label="Mais..." value="5" />
-                </Picker>
-              </View>
-              <Button style={styles.button} full onPress={() => Toast.show({
-                text: 'Item Comprado',
-                buttonText: 'Ok'
-              })}
-              >
-                <Text>COMPRAR</Text>
-              </Button>
-              <Button style={styles.button} full bordered onPress={() => Toast.show({
-                text: 'Item adicionado ao carrinho',
-                buttonText: 'Ok'
-              })}>
-                <Text>Adicionar ao carrinho</Text>
-              </Button>
-            </Form> */}
             <View style={{ marginTop: 10 }}>
               <Text style={styles.subTitle}>Informações sobre Vendedor :</Text>
               <List  >
@@ -106,7 +95,13 @@ class ProdutoScreen extends Component {
                     <Icon name="pin" style={styles.icon} />
                   </Left>
                   <Body >
-                    <Text style={styles.fontInfo}>Feira X - Cidade Z, Rua X, Entre Rua Y e Rua Z. Bairro X, CEP: 66666-666</Text>
+                    <Text style={styles.font}>Feira: {(feira!=null)?feira.nome:'-'}</Text>
+                    <Text style={styles.font}>Rua: {(feira!=null)?feira.endereco.rua:'-'}</Text>
+                    <Text style={styles.font}>Bairro: {(feira!=null)?feira.endereco.bairro:'-'}</Text>
+                    <Text style={styles.font}>Complemento: {(feira!=null)?feira.endereco.complemento:'-'}</Text>
+                    <TouchableOpacity onPress={()=>this.goToFeira()}>
+                      <Text style={{color: 'blue', fontWeight: 'bold',}}>Veja no Mapa</Text>
+                    </TouchableOpacity>
                   </Body>
                 </ListItem>
               </List>
@@ -124,10 +119,10 @@ class ProdutoScreen extends Component {
                 </ListItem>
               </List>
             </View>
-            <View style={{ marginTop: 10 }}>
+            {/* <View style={{ marginTop: 10 }}>
               <Text style={styles.subTitle}>Outros produtos deste vendedor:</Text>
               <Text style={styles.fontInfo}>Em breve...</Text>
-            </View>
+            </View> */}
           </View>
         </Content>
       </Container>

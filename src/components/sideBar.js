@@ -29,7 +29,8 @@ class SideBar extends Component {
       <Content style={{ backgroundColor: "white" }}>
         <TouchableOpacity 
         style={{ height: 123, width: null, flex: 1, backgroundColor: primaryColor, flexDirection: 'row', justifyContent: 'space-evenly', }}
-        onPress={this.props.goToMinhaContaScreen}>
+        // onPress={this.props.goToMinhaContaScreen}
+        >
           {/* <View style={{ alignItems: "center", justifyContent: 'center' }}>
             <Thumbnail
               source={ (user.imagem != "-") ? {'uri': user.imagem} : require('../static/img/user-256.png') }
@@ -50,14 +51,14 @@ class SideBar extends Component {
               <Text style={styles.menuFont}>Minha conta</Text>
             </Body>
           </ListItem> */}
-          <ListItem icon>
+          {/* <ListItem icon>
             <Left>
               <Icon name="settings" style={styles.icon} />
             </Left>
             <Body>
               <Text style={styles.menuFont}>Configurações</Text>
             </Body>
-          </ListItem>
+          </ListItem> */}
           <ListItem icon>
             <Left>
               <Icon name="share" style={styles.icon} />

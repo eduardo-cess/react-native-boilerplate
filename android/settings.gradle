@@ -1,4 +1,6 @@
 rootProject.name = 'Feira'
+include ':react-native-exit-app'
+project(':react-native-exit-app').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-exit-app/android')
 include ':react-native-fetch-blob'
 project(':react-native-fetch-blob').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-fetch-blob/android')
 include ':react-native-image-crop-picker'

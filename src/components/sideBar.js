@@ -17,6 +17,8 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { logOut } from "../store/actions";
 import { primaryColor } from '../theme/variables/commonColor';
+import RNExitApp from 'react-native-exit-app';
+
 
 class SideBar extends Component {
   logOutHandler = () => {
@@ -67,7 +69,7 @@ class SideBar extends Component {
               <Text style={styles.menuFont}>Compartilhe</Text>
             </Body>
           </ListItem>
-          <ListItem icon onPress={this.logOutHandler}>
+          <ListItem icon onPress={() => RNExitApp.exitApp()}>
             <Left>
               <Icon name="exit" style={styles.icon} />
             </Left>
